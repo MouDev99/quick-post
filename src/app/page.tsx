@@ -1,7 +1,14 @@
+'use client';
+
 import LoginForm from '@/app/ui/login-form';
 import Image from 'next/image';
+import { useState } from 'react';
+import Modal from '@/app/ui/modal';
+import SignupFrom from '@/app/ui/signup-form';
 
 export default function Home() {
+  const [showSignup, setShowSignup] = useState(false);
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-start p-7 md:p-18 md:flex-row md:justify-center md:gap-7">
       <div className="h-full p-4 m-2 max-[190px]:hidden">
@@ -17,10 +24,17 @@ export default function Home() {
             <span className="mx-2 text-gray-600 font-semibold">Or</span>
             <span className="w-full h-1 bg-gray-300 rounded-lg"></span>
           </div>
-          <button type="submit" className="flex justify-center rounded-xl py-2 w-full font-semibold text-md text-white bg-[#3A98EB] hover:opacity-90 transition-opacity duration-300">
+          <button onClick={() => setShowSignup(true)} type="submit" className="flex justify-center rounded-xl py-2 w-full font-semibold text-md text-white bg-[#3A98EB] hover:opacity-90 transition-opacity duration-300">
             Create Account
           </button>
         </div>
+      </div>
+      <div>
+        {showSignup &&
+          <Modal onClose={() => setShowSignup(false)}>
+            <SignupFrom />
+          </Modal>
+        }
       </div>
     </main>
   );
