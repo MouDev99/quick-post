@@ -20,7 +20,7 @@ export default function LoginForm() {
       </div>
       <div className="mt-4">
         <button type="submit" aria-disabled={pending} className="flex justify-center rounded-xl py-2 w-full font-semibold text-md text-white bg-[#3A98EB] hover:opacity-90 transition-opacity duration-300">
-          Sign in
+          Sign In
         </button>
       </div>
       <div
