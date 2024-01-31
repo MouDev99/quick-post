@@ -19,7 +19,7 @@ export default function Home() {
         <h2 className="font-semibold text-2xl my-3 sm:text-3xl">Join today.</h2>
         <LoginForm />
         <div>
-          <div className="w-full flex items-center h-3 my-4">
+          <div className="w-full flex items-center h-3 mb-4">
             <span className="w-full h-1 bg-gray-300 rounded-lg"></span>
             <span className="mx-2 text-gray-600 font-semibold">Or</span>
             <span className="w-full h-1 bg-gray-300 rounded-lg"></span>

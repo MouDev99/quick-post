@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 
 const users = [
   {
-    id: '410544b2-4001-4271-9855-fec4b6a6442a',
     username: 'DemoUser',
     email: 'user@nextmail.com',
     password: '123456',
@@ -12,12 +11,11 @@ const users = [
 
 async function seedUsers(client) {
   try {
-    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
     // Create the "users" table if it doesn't exist
     const createTable = await client.sql`
       CREATE TABLE IF NOT EXISTS users (
-        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        username VARCHAR(255) NOT NULL,
+        id SERIAL PRIMARY KEY,
+        username VARCHAR(255) NOT NULL UNIQUE,
         email TEXT NOT NULL UNIQUE,
         hashedPassword TEXT NOT NULL
       );
@@ -30,8 +28,8 @@ async function seedUsers(client) {
       users.map(async (user) => {
         const hashedPassword = await bcrypt.hash(user.password, 10);
         return client.sql`
-        INSERT INTO users (id, username, email, hashedPassword)
-        VALUES (${user.id}, ${user.username}, ${user.email}, ${hashedPassword})
+        INSERT INTO users (username, email, hashedPassword)
+        VALUES (${user.username}, ${user.email}, ${hashedPassword})
         ON CONFLICT (id) DO NOTHING;
       `;
       }),
