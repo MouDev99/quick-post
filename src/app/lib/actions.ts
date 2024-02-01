@@ -6,6 +6,7 @@ import { z } from "zod";
 import { sql } from '@vercel/postgres';
 import bcrypt from 'bcryptjs';
 import { redirect } from 'next/navigation';
+import { SignUpState } from './definitions';
 // ...
 
 const FormSchema = z.object({
@@ -20,7 +21,7 @@ const FormSchema = z.object({
 
 const SignUpUser = FormSchema.omit({ id: true, confirmPassword: true });
 
-export async function signUp( prevState: string | undefined, formData: FormData ) {
+export async function signUp( prevState: SignUpState, formData: FormData ) {
   const validatedFields = SignUpUser.safeParse({
     username: formData.get('username'),
     email: formData.get('email'),
@@ -65,6 +66,8 @@ export async function signUp( prevState: string | undefined, formData: FormData 
   await signIn("credentials", { username, password, redirect: false })
   // then redirect them to '/feed';
   redirect('/feed');
+
+  return {errors: {}, message: null};
 }
 
 export async function authenticate(

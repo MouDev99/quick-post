@@ -4,3 +4,14 @@ export type User = {
   email: string;
   hashedpassword: string;
 };
+
+
+export type SignUpState = {
+  errors?: {
+    username?: string[];
+    email?: string[];
+    password?: string[];
+    confirmPassword?: string[];
+  };
+  message?: string | null;
+};
