@@ -5,7 +5,6 @@ export type User = {
   hashedpassword: string;
 };
 
-
 export type SignUpState = {
   errors?: {
     username?: string[];

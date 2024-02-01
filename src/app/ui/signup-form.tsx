@@ -4,7 +4,7 @@ import { useFormState, useFormStatus } from 'react-dom';
 import { signUp } from '../lib/actions';
 
 export default function SignupFrom() {
-  const initialState = { message: null, errors: {} };
+  const initialState = {message: null, errors: {}};
   const [state, dispatch] = useFormState(signUp, initialState);
   const { pending } = useFormStatus();
 
