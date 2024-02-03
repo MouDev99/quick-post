@@ -13,7 +13,7 @@ export const authConfig = {
         if (isLoggedIn) return true;
         return false; // Redirect unauthenticated users to home page so they can log in
       } else if (isLoggedIn) {
-        return Response.redirect(new URL('/feed', nextUrl));
+        return Response.redirect(new URL('/home', nextUrl));
       }
       return true;
     },

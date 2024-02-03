@@ -1,15 +1,20 @@
 import { MouseEventHandler, ReactNode } from "react";
 
-export default function Modal({ children, onClose }:
+export default function Modal(
+  { children, onClose, styles }:
   {
     children: ReactNode,
-    onClose: MouseEventHandler
+    onClose: MouseEventHandler,
+    styles: string | undefined
   }
 ) {
 
   return (
-    <div onClick={onClose} className="bg-transparent backdrop-blur-sm flex justify-center items-start pt-24 fixed top-0 left-0 w-full h-full sm:items-center sm:pt-0">
-      <div className="relative w-96 px-4 py-6 bg-white rounded-md border-2 border-gray-300" onClick={(e) => e.stopPropagation()}>
+    <div onClick={onClose} className="flex fixed top-0 left-0 backdrop-blur-sm w-full h-full sm:pt-0">
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className={styles + ' relative px-4 py-6 bg-white rounded-md border-2 border-gray-300 pointer-events-auto'}
+      >
         <IconClose onClose={onClose} />
         {children}
       </div>
@@ -17,8 +22,8 @@ export default function Modal({ children, onClose }:
   )
 }
 
-
 function IconClose({onClose}: {onClose: MouseEventHandler}) {
+
   return (
     <svg
       viewBox="0 0 1024 1024"

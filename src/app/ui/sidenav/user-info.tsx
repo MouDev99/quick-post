@@ -15,11 +15,11 @@ export default function UserInfo({ user, signOutUser }: {user: any, signOutUser:
       >
         <div className='flex items-center gap-1 w-full'>
           <div className='h-full p-2 rounded-full bg-[#CDD6DC]'>
-            <UserIconSolid className='w-8 text-[677685]' />
+            <UserIconSolid className='w-8 text-[#677685]' />
           </div>
           <div className='flex-col items-start hidden md:flex'>
-            <h3 className='leading-5 text-base font-extrabold text-[#0f1419]'>@{user.name}</h3>
-            <h4 className='leading-4 text-[#536471]'>{user.email}</h4>
+            <h3 className='leading-5 text-base font-extrabold text-[#0f1419]'>@{user?.name}</h3>
+            <h4 className='leading-4 text-[#536471]'>{user?.email}</h4>
           </div>
         </div>
         <EllipsisHorizontalIcon className='w-7 hidden md:block'/>

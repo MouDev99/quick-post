@@ -18,7 +18,7 @@ const signOutUser = async () => {
 };
 
 const navItems = [
-  {title: 'Home', link: '/feed', Icon: HomeIcon},
+  {title: 'Home', link: '/home', Icon: HomeIcon},
   {title: 'Explore', link: '/explore', Icon: MagnifyingGlassIcon},
   {title: 'Notifications', link: '/notifications', Icon: BellIcon},
   {title: 'Messages', link: '/messages', Icon: EnvelopeIcon},
@@ -31,7 +31,7 @@ export default async function SideNav() {
   const session = await auth();
 
   return (
-    <div className='flex flex-col md:w-72 border-2 border-green-500'>
+    <div className='flex flex-col border-l border-gray-200 md:w-72'>
       {navItems.map((item, i) => <NavItem key={i} item={item}/>)}
       <PostButton />
       <UserInfo user={session?.user} signOutUser={signOutUser}/>

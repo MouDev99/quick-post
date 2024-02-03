@@ -6,12 +6,12 @@ import { useState } from 'react';
 import Modal from '@/app/ui/modal';
 import SignupFrom from '@/app/ui/signup-form';
 
-export default function Home() {
+export default function Index() {
   const [showSignup, setShowSignup] = useState(false);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-start p-7 md:p-18 md:flex-row md:justify-center md:gap-7">
-      <div className="h-full p-4 m-2 max-[190px]:hidden">
+      <div className="p-4 m-2 max-[190px]:hidden self-center">
         <Logo />
       </div>
       <div className="shadow-sm px-2 py-4">
@@ -31,7 +31,10 @@ export default function Home() {
       </div>
       <div>
         {showSignup &&
-          <Modal onClose={() => setShowSignup(false)}>
+          <Modal
+            styles='w-96 m-auto'
+            onClose={() => setShowSignup(false)}
+          >
             <SignupFrom />
           </Modal>
         }
