@@ -15,7 +15,7 @@ import {
  } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 
-const CreatePost = memo(() => {
+const CreatePost = memo( function CreatePostFunc() {
   const [showPicker, setShowPicker] = useState(false);
   const [showPollModal, setShowPollModal] = useState(false);
   const [imgSrc, setImgSrc] = useState('');
@@ -23,15 +23,15 @@ const CreatePost = memo(() => {
 
   return (
     <div>
-      <div className='flex p-3 border-b border-gray-300'>
+      <div className='flex justify-center p-3 w-full  sm:w-5/6 mx-auto border-b border-gray-300 '>
         <Link href='/profile' className='h-full w-fit'>
           <div className='h-full w-fit p-2 rounded-full bg-[#CDD6DC]'>
             <UserIconSolid className='w-8 text-[#677685]' />
           </div>
         </Link>
-        <form className='w-full ml-2'>
+        <form className='sm:w-5/6 ml-2'>
           <textarea
-            className='w-full max-h-24 text-md text-gray-700 outline-none rounded-lg p-1 border-b focus:p-3 focus:h-16 focus:shadow-md transition-all duration-500'
+            className='w-full max-h-44 h-20 text-md text-gray-700 outline-none rounded-lg p-3 border-b focus:h-28 focus:shadow-md transition-all duration-500'
             placeholder="What's on your mind?"
             value={content}
             onChange={(e) => setContent(e.target.value)}

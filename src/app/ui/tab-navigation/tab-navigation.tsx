@@ -11,10 +11,10 @@ export default function TabNavigation(
   const activeClass = 'font-extrabold text-gray-800 border-b-4 border-[#3A98EB]';
 
   return (
-    <div className="">
+    <div className="sticky top-0 z-50 border-b border-gray-300 bg-white">
       <div className=" grid grid-rows-2 grid-cols-2 gap-1 sm:grid-rows-1 sm:grid-cols-3 border-b-[1px] border-gray-200 shadow-sm">
         <Link
-          href='/feed'
+          href='/home'
           className='flex justify-start items-center pl-2 text-lg text-gray-800 font-bold sm:hidden'
         >
           Home

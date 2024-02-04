@@ -14,3 +14,18 @@ export type SignUpState = {
   };
   message?: string | null;
 };
+
+export type PostType = {
+  id: string,
+  content: string,
+  imgUrl: string | null,
+  user: {
+    id: number,
+    username: string,
+    profileImgUrl: string | null
+  },
+  comments: Object[],
+  numOfShares: number,
+  numOfLikes: number,
+  createdAt: Date
+}

@@ -25,7 +25,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={robot_mono.className}>
-        <div className="flex px-6 h-[100%] bg-white justify-center">
+        <div className="flex px-6 h-fit bg-white justify-center">
           {session?.user && <SideNav />}
           {children}
         </div>

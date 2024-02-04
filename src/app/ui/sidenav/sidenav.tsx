@@ -31,7 +31,7 @@ export default async function SideNav() {
   const session = await auth();
 
   return (
-    <div className='flex flex-col border-l border-gray-200 md:w-72'>
+    <div className='sticky top-0 h-screen flex flex-col border-l border-gray-200 md:w-72'>
       {navItems.map((item, i) => <NavItem key={i} item={item}/>)}
       <PostButton />
       <UserInfo user={session?.user} signOutUser={signOutUser}/>
