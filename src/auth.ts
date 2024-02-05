@@ -3,12 +3,12 @@ import { authConfig } from './auth.config';
 import Credentials from 'next-auth/providers/credentials';
 import { z } from 'zod';
 import { sql } from '@vercel/postgres';
-import type { User } from '@/app/lib/definitions';
+import type { UserType } from '@/app/lib/definitions';
 import bcrypt from 'bcryptjs';
 
-async function getUser(username: string): Promise<User | undefined> {
+async function getUser(username: string): Promise<UserType | undefined> {
   try {
-    const user = await sql<User>`SELECT * FROM users WHERE username=${username}`;
+    const user = await sql<UserType>`SELECT * FROM users WHERE username=${username}`;
     return user.rows[0];
   } catch (error) {
     console.error('Failed to fetch user:', error);

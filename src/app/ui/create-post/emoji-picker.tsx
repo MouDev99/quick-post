@@ -18,7 +18,7 @@ export default function EmojiPicker(
   }, [emoji]);
 
   return (
-    <div className='absolute top-12 -left-28 sm:left-8'>
+    <div className='absolute top-12 -left-28 z-50 sm:left-8'>
       <Picker
           data={data}
           onEmojiSelect={setEmoji}
