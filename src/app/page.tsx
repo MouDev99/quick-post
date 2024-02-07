@@ -32,7 +32,7 @@ export default function Index() {
       <div>
         {showSignup &&
           <Modal
-            styles='w-96 m-auto'
+            styles='w-full h-[100vh] overflow-auto md:w-fit min-[425px]:h-fit min-[425px]:m-auto pt-8 pb-4'
             onClose={() => setShowSignup(false)}
           >
             <SignupFrom />

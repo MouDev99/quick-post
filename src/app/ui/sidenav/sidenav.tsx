@@ -1,4 +1,3 @@
-import { auth, signOut } from "@/auth";
 import {
   HomeIcon,
   MagnifyingGlassIcon,
@@ -12,11 +11,6 @@ import Link from 'next/link';
 import PostButton from './post-button';
 import UserInfo from './user-info';
 
-const signOutUser = async () => {
-  'use server';
-  await signOut();
-};
-
 const navItems = [
   {title: 'Home', link: '/home', Icon: HomeIcon},
   {title: 'Explore', link: '/explore', Icon: MagnifyingGlassIcon},
@@ -28,13 +22,12 @@ const navItems = [
 ];
 
 export default async function SideNav() {
-  const session = await auth();
 
   return (
     <div className='sticky top-0 h-screen flex flex-col border-l border-gray-200 md:w-72'>
       {navItems.map((item, i) => <NavItem key={i} item={item}/>)}
       <PostButton />
-      <UserInfo user={session?.user} signOutUser={signOutUser}/>
+      <UserInfo />
     </div>
   )
 }

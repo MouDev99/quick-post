@@ -1,11 +1,14 @@
 'use client';
 
-import { useState } from "react";
-import { UserIcon as UserIconSolid } from '@heroicons/react/24/solid';
+import React, { useState } from "react";
 import { EllipsisHorizontalIcon, PowerIcon } from '@heroicons/react/24/outline';
+import UserAvatar from "../user-avatar";
+import { useSession, signOut } from "next-auth/react";
 
-export default function UserInfo({ user, signOutUser }: {user: any, signOutUser: Function}) {
+export default function UserInfo() {
   const [showMore, setShowMore] = useState(false);
+  const { data: session } = useSession();
+  const user = session?.user;
 
   return (
     <div className='h-[58px] mt-auto mb-2 relative'>
@@ -14,9 +17,7 @@ export default function UserInfo({ user, signOutUser }: {user: any, signOutUser:
         onClick={() => setShowMore(!showMore)}
       >
         <div className='flex items-center gap-1 w-full'>
-          <div className='h-full p-2 rounded-full bg-[#CDD6DC]'>
-            <UserIconSolid className='w-8 text-[#677685]' />
-          </div>
+          <UserAvatar styles={''} />
           <div className='flex-col items-start hidden md:flex'>
             <h3 className='leading-5 text-base font-extrabold text-[#0f1419]'>@{user?.name}</h3>
             <h4 className='leading-4 text-[#536471]'>{user?.email}</h4>
@@ -29,7 +30,7 @@ export default function UserInfo({ user, signOutUser }: {user: any, signOutUser:
           <button
             className='w-full mx-1 my-1 p-2 flex justify-center rounded-lg text-red-800 font-bold hover:bg-gray-200'
             title="sign out"
-            onClick={() => signOutUser()}
+            onClick={() => signOut()}
           >
            <PowerIcon className="w-6 text-red-800"/>
           <span className="hidden md:inline">Logout</span>

@@ -51,7 +51,7 @@ export const posts = [
     createdAt: new Date()
   },
   {
-    id: '7',
+    id: '32f7b7dd-1827-485c-a7cf-cf05887eae34',
     content: `Exploring the vast universe of possibilities and diving deep into the realms of knowledge. Each day is an opportunity to learn, grow, and embrace the wonders that life unfolds. Let curiosity be your guide and passion your fuel as you navigate through the intricacies of existence. 🌌📚✨`,
     imgUrl: null,
     user: {
@@ -76,6 +76,20 @@ export const posts = [
     comments: [],
     numOfShares: 8,
     numOfLikes: 25,
+    createdAt: new Date()
+  },
+  {
+    id: '32f7b7dd-1827-485c-a7cf-64996eaa4477',
+    content: `Embracing the coding journey with passion and dedication! 🚀 Constantly learning, building, and exploring new technologies. Excited about the endless possibilities that coding offers. Join me in this amazing adventure! 💻✨`,
+    imgUrl: null,
+    user: {
+      id: 2,
+      username: 'CodeMaster',
+      profileImgUrl: null
+    },
+    comments: [],
+    numOfShares: 17,
+    numOfLikes: 34,
     createdAt: new Date()
   },
   {

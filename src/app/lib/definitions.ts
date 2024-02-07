@@ -1,8 +1,11 @@
+import { Blob } from "buffer";
+
 export type UserType = {
   id: number;
   username: string;
   email: string;
   hashedpassword: string;
+  userprofileurl: string | null
 };
 
 export type SignUpState = {

@@ -65,8 +65,8 @@ export default function PostCard(
       </div>
       <div className="flex flex-col w-full">
         <div className="flex justify-between">
-          <span className="text-md text-[#0f1419] font-semibold">
-            @{user.username}
+          <span className="text-lg text-[#0f1419] font-semibold">
+            <Link href='/profile'>@{user.username}</Link>
             <time className="ml-1 text-sm text-[#536471]">
               {createdAt.toDateString()}
             </time>
@@ -79,7 +79,7 @@ export default function PostCard(
           </div>
         </div>
 
-        <div className="relative text-md text-[#0f1419] whitespace-pre-line	">
+        <div className="relative text-md text-[#0f1419] whitespace-pre-line">
           {postText}
           {showPostActions && <PostActions user={user} />}
         </div>
