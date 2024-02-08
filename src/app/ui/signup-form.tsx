@@ -6,12 +6,12 @@ import {ArrowUpTrayIcon, ExclamationCircleIcon } from '@heroicons/react/24/outli
 import {UserIcon as UserIconSolid} from '@heroicons/react/24/solid';
 import { useFormState, useFormStatus } from 'react-dom';
 import { signUp } from '../lib/actions';
+import { SignUpState } from '../lib/definitions';
 import { useEdgeStore } from '../lib/edgestroe';
 
 export default function SignupFrom() {
-
-  const initialState = {message: null, errors: {}};
-  const [state, dispatch] = useFormState(signUp, initialState);
+  const initialState: SignUpState = {message: null, errors: {}};
+  const [state, dispatch] = useFormState<SignUpState>(signUp, initialState);
   const { pending } = useFormStatus();
   const [formData, setFormData] = useState(new FormData());
 

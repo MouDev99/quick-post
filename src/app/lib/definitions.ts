@@ -32,3 +32,9 @@ export type PostType = {
   numOfLikes: number,
   createdAt: Date
 }
+
+export type PostState = {
+  errors?: {
+    content?: string[] | null;
+  }
+}

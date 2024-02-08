@@ -5,16 +5,23 @@ import Picker from '@emoji-mart/react'
 import { useEffect, useState } from 'react';
 
 export default function EmojiPicker(
-  { hidePicker, setContent }:
+  { hidePicker,
+    content,
+    setContent,
+    formData
+  }:
   {
     hidePicker: Function,
-    setContent: Function
+    content: string,
+    setContent: Function,
+    formData: FormData
   }
 ) {
   const [emoji, setEmoji] = useState({native: ''});
 
   useEffect(() => {
     setContent((prev: string) => prev += emoji.native);
+    formData.set('content', content + emoji.native);
   }, [emoji]);
 
   return (

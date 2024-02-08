@@ -16,7 +16,11 @@ export const authConfig = {
         return Response.redirect(new URL('/home', nextUrl));
       }
       return true;
-    }
+    },
+    session({ session, token }) {
+      session.user.id = token.sub;
+      return session // The return type will match the one returned in `useSession()`
+    },
   },
   providers: [], // Add providers with an empty array for now
 } satisfies NextAuthConfig;

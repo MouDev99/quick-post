@@ -26,6 +26,7 @@ export default function PostCard(
     idx: number
   }
 ) {
+
   const [liked, setLiked] = useState(false);
   const [saved, setSaved] = useState(false);
   const [showPostActions, setShowPostActions] = useState(false);

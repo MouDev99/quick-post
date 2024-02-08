@@ -34,11 +34,11 @@ export const { auth, signIn, signOut, handlers: { GET, POST } } = NextAuth({
           const passwordsMatch = await bcrypt.compare(password, user.hashedpassword);
           if (passwordsMatch) return {
             ...user,
+            id: user.id,
             name: user.username,
             image: user.userprofileurl
           };
         }
-
         console.log('Invalid credentials');
         return null;
       },

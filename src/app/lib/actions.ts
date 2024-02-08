@@ -2,11 +2,12 @@
 
 import { signIn } from '../../auth';
 import { AuthError } from 'next-auth';
-import { string, z } from "zod";
+import { z } from "zod";
 import { sql } from '@vercel/postgres';
 import bcrypt from 'bcryptjs';
+import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { SignUpState } from './definitions';
+import {PostState, SignUpState } from './definitions';
 // ...
 
 const FormSchema = z.object({
@@ -22,7 +23,7 @@ const FormSchema = z.object({
 
 const SignUpUser = FormSchema.omit({id: true, confirmPassword: true});
 
-export async function signUp( prevState: SignUpState, formData: FormData ) {
+export async function signUp(prevState: SignUpState, formData: FormData) {
 
   const validatedFields = SignUpUser.safeParse({
     username: formData.get('username'),
@@ -62,6 +63,7 @@ export async function signUp( prevState: SignUpState, formData: FormData ) {
     console.error(error)
     return {
       message: 'Database Error: Failed to sign up.',
+      errors: {}
     };
   }
 
@@ -70,7 +72,7 @@ export async function signUp( prevState: SignUpState, formData: FormData ) {
   // then redirect them to '/home';
   redirect('/home');
 
-  return {errors: {}, message: null};
+  return {};
 }
 
 export async function authenticate(
@@ -90,4 +92,50 @@ export async function authenticate(
     }
     throw error;
   }
+}
+
+const PostSchema = z.object({
+  userId: z.number(),
+  content: z.string()
+    .min(1, { message: 'text must be at least 1 char long.' })
+    .max(300, { message: 'text must be at most 300 chars long.' }),
+  imgUrl: z.string().nullable(),
+});
+
+export async function createPostAction (
+  prevState: PostState,
+  formData: FormData,
+) {
+
+  const validatedFields = PostSchema.safeParse({
+    userId: parseInt(formData.get('userId')?.toString()?? '0'),
+    content: formData.get("content"),
+    imgUrl: formData.get("imgUrl"),
+  })
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors
+    }
+  }
+
+  const {userId, content, imgUrl} = validatedFields.data;
+
+  try {
+    await sql`
+    INSERT INTO posts (userid, content, imgurl)
+    VALUES (${userId}, ${content}, ${imgUrl})
+    `
+  } catch (error) {
+    console.error(error)
+    return {
+      errors: {
+        dbError: ['Database Error: Failed to post.']
+      },
+    };
+  }
+
+  // Revalidate the cache for the home page and redirect the user.
+  revalidatePath('/home');
+  redirect('/home');
 }
