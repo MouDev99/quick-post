@@ -96,8 +96,8 @@ const CreatePost = memo( function CreatePost() {
           </textarea>
           {state?.errors?.content &&
             <div className='h-fit bg-red-200 text-red-600 py-1 px-2 rounded-lg border border-red-600'>
-              {state?.errors?.content?.map((error: string) => {
-                return <div>{error}</div>
+              {state?.errors?.content?.map((error: string, idx: number) => {
+                return <div key={idx}>{error}</div>
               })
               }
             </div>
