@@ -31,7 +31,7 @@ export type PostType = {
   numOfShares: number,
   numOfLikes: number,
   createdAt: Date
-}
+} | undefined;
 
 export type PostState = {
   errors?: {
