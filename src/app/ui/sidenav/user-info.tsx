@@ -17,7 +17,11 @@ export default function UserInfo() {
         onClick={() => setShowMore(!showMore)}
       >
         <div className='flex items-center gap-1 w-full'>
-          <UserAvatar styles={''} />
+          <UserAvatar
+            styles={''}
+            userProfileUrl={null}
+            userId={user?.id?? ''}
+          />
           <div className='flex-col items-start hidden md:flex'>
             <h3 className='leading-5 text-base font-extrabold text-[#0f1419]'>@{user?.name}</h3>
             <h4 className='leading-4 text-[#536471]'>{user?.email}</h4>

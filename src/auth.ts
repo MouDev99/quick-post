@@ -36,7 +36,7 @@ export const { auth, signIn, signOut, handlers: { GET, POST } } = NextAuth({
             ...user,
             id: user.id,
             name: user.username,
-            image: user.userprofileurl
+            image: user.userProfileUrl
           };
         }
         console.log('Invalid credentials');

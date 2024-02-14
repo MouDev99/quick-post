@@ -1,11 +1,9 @@
-import { Blob } from "buffer";
-
 export type UserType = {
   id: number;
   username: string;
   email: string;
   hashedpassword: string;
-  userprofileurl: string | null
+  userProfileUrl: string | null
 };
 
 export type SignUpState = {
@@ -20,21 +18,18 @@ export type SignUpState = {
 
 export type PostType = {
   id: string,
-  content: string,
   imgUrl: string | null,
-  user: {
-    id: number,
-    username: string,
-    profileImgUrl: string | null
-  },
-  comments: Object[],
-  numOfShares: number,
-  numOfLikes: number,
+  content: string | null,
   createdAt: Date
-} | undefined;
+  userId: number,
+  username: string,
+  email: string,
+  userProfileUrl: string | null,
+};
 
 export type PostState = {
   errors?: {
     content?: string[] | null;
-  }
+  },
+  success?: boolean
 }

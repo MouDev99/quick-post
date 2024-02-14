@@ -9,7 +9,7 @@ const nextConfig = {
         pathname: '/**/publicFiles/_public/**',
       },
     ],
-  },
+  }
 };
 
 export default nextConfig;

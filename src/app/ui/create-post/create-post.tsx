@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import Link from 'next/link';
 import EmojiPicker from './emoji-picker';
 import PollCreator from './poll-creator';
@@ -15,7 +15,7 @@ import {
 import Image from 'next/image';
 import UserAvatar from '../user-avatar';
 import { useEdgeStore } from '@/app/lib/edgestroe';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useFormState } from 'react-dom';
 import { createPostAction } from '@/app/lib/actions';
 import { PostState } from '@/app/lib/definitions';
 import { useSession } from 'next-auth/react';
@@ -28,7 +28,6 @@ const CreatePost = memo( function CreatePost() {
 
   const initialState: PostState = {errors: {}};
   const [state, dispatch] = useFormState<PostState>(createPostAction, initialState);
-  const { pending } = useFormStatus();
   const [formData, setFormData] = useState(new FormData());
   const [file, setFile] = useState<File>();
 
@@ -69,8 +68,13 @@ const CreatePost = memo( function CreatePost() {
     const ppUrl = await storeImgFile(file);
     if (ppUrl) formData.set('imgUrl', ppUrl);
     formData.set('userId', '' + session?.user?.id)
-    dispatch(formData); // Trigger form action
+    // dispatch(formData);
+    dispatch(formData);
   };
+
+  useEffect(() => {
+    if (state.success) window.location.reload();
+  }, [state])
 
   return (
     <div>
@@ -78,6 +82,8 @@ const CreatePost = memo( function CreatePost() {
         <Link href='/profile' className='h-full w-fit'>
           <UserAvatar
             styles={'sm:w-16 sm:h-16'}
+            userProfileUrl={null}
+            userId={session?.user?.id?? ''}
           />
         </Link>
         <form onSubmit={handleFormSubmit} className='sm:w-5/6 ml-2'>
@@ -154,7 +160,6 @@ const CreatePost = memo( function CreatePost() {
               type='submit'
               className={`${(content.trim().length === 0) && !imgSrc ? 'opacity-60' : 'hover:bg-blue-500'} ml-auto h-5/6 px-5 self-center rounded-2xl text-white font-bold bg-[#3A98EB]`}
               disabled={(content.trim().length === 0) && !imgSrc}
-              aria-disabled={pending}
             >
               Post
             </button>

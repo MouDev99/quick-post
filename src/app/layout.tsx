@@ -29,7 +29,7 @@ export default async function RootLayout({
       <body className={robot_mono.className}>
         <EdgeStoreProvider>
           <SessionProvider session={session}>
-            <div className="flex px-6 h-fit bg-white justify-center">
+            <div className="flex px-1 sm:px-6 h-fit bg-white justify-center">
               {session?.user && <SideNav />}
               {children}
             </div>

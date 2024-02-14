@@ -5,7 +5,6 @@ import { AuthError } from 'next-auth';
 import { z } from "zod";
 import { sql } from '@vercel/postgres';
 import bcrypt from 'bcryptjs';
-import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import {PostState, SignUpState } from './definitions';
 // ...
@@ -56,7 +55,7 @@ export async function signUp(prevState: SignUpState, formData: FormData) {
 
   try {
     await sql`
-    INSERT INTO users (username, email, hashedpassword, userprofileurl)
+    INSERT INTO users (username, email, hashedpassword, "userProfileUrl")
     VALUES (${username}, ${email}, ${hashedPassword}, ${userProfileUrl})
     `
   } catch (error) {
@@ -68,7 +67,7 @@ export async function signUp(prevState: SignUpState, formData: FormData) {
   }
 
   // sign in the user after account creation
-  await signIn("credentials", { username, password, redirect: false })
+  await signIn("credentials", {username, password, redirect: false})
   // then redirect them to '/home';
   redirect('/home');
 
@@ -102,13 +101,10 @@ const PostSchema = z.object({
   imgUrl: z.string().nullable(),
 });
 
-export async function createPostAction (
-  prevState: PostState,
-  formData: FormData,
-) {
+export async function createPostAction(prevState: PostState, formData: FormData) {
 
   const validatedFields = PostSchema.safeParse({
-    userId: parseInt(formData.get('userId')?.toString()?? '0'),
+    userId: parseInt(formData.get('userId')?.toString() ?? '0'),
     content: formData.get("content"),
     imgUrl: formData.get("imgUrl"),
   })
@@ -120,10 +116,9 @@ export async function createPostAction (
   }
 
   const {userId, content, imgUrl} = validatedFields.data;
-
   try {
     await sql`
-    INSERT INTO posts (userid, content, imgurl)
+    INSERT INTO posts ("userId", content, "imgUrl")
     VALUES (${userId}, ${content}, ${imgUrl})
     `
   } catch (error) {
@@ -135,7 +130,5 @@ export async function createPostAction (
     };
   }
 
-  // Revalidate the cache for the home page and redirect the user.
-  revalidatePath('/home');
-  redirect('/home');
+  return {success: true};
 }
