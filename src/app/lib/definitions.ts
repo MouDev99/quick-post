@@ -25,6 +25,9 @@ export type PostType = {
   username: string,
   email: string,
   userProfileUrl: string | null,
+  numOfLikes: string,
+  likedByUsers: any[];
+  bookmarkedByUsers: any[]
 };
 
 export type PostState = {

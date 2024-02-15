@@ -14,12 +14,24 @@ export async function fetchPosts() {
         posts.*,
         users.email,
         users.username,
-        users."userProfileUrl"
+        users."userProfileUrl",
+        ARRAY_AGG(DISTINCT likes.userId) AS "likedByUsers",
+        ARRAY_AGG(DISTINCT bookmarks.userId) AS "bookmarkedByUsers",
+        COUNT(likes.userId) AS "numOfLikes"
       FROM
         posts
       JOIN
         users ON posts."userId" = users.id
-      ORDER BY "createdAt" DESC;
+      LEFT JOIN
+        likes ON posts.id = likes.postId
+      LEFT JOIN (
+        SELECT DISTINCT postId, userId
+        FROM bookmarks
+      ) AS bookmarks ON posts.id = bookmarks.postId
+      GROUP BY
+        posts.id, users.id
+      ORDER BY
+        posts."createdAt" DESC;
     `;
     const data = await sql.query<PostType[]>(query);
     return data.rows;
@@ -37,13 +49,24 @@ export const fetchPostById = async (id: string) => {
         posts.*,
         users.email,
         users.username,
-        users."userProfileUrl"
+        users."userProfileUrl",
+        ARRAY_AGG(likes.userId) AS "likedByUsers",
+        ARRAY_AGG(bookmarks.userId) AS "bookmarkedByUsers",
+        COUNT(likes.userId) AS "numOfLikes"
       FROM
         posts
       JOIN
         users on posts."userId" = users.id
+      LEFT JOIN
+        likes ON posts.id = likes.postId
+      LEFT JOIN (
+        SELECT DISTINCT postId, userId
+        FROM bookmarks
+      ) AS bookmarks ON posts.id = bookmarks.postId
       WHERE
         posts.id = '${id}'
+      GROUP BY
+        posts.id, users.id
     `;
     const data = await sql.query<PostType[]>(query);
     return data.rows[0];

@@ -132,3 +132,61 @@ export async function createPostAction(prevState: PostState, formData: FormData)
 
   return {success: true};
 }
+
+export async function likeOrDislikePost(
+  action: string,
+  userId: number | undefined,
+  postId: string
+) {
+
+  if (action === 'like') {
+    try {
+      await sql`
+        INSERT INTO likes (userId, postId)
+        VAlUES(${userId}, ${postId})
+      `;
+      return {success: true}
+    } catch(error) {
+      console.error(error)
+    }
+  } else if (action === 'dislike') {
+    try {
+      await sql`
+        DELETE FROM likes
+        WHERE userId=${userId} AND postId=${postId}
+      `;
+      return {success: true}
+    } catch(error) {
+      console.error(error)
+    }
+  }
+}
+
+export async function addOrRemoveFromBookmarks(
+  action: string,
+  userId: number | undefined,
+  postId: string
+) {
+
+  if (action === 'add') {
+    try {
+      await sql`
+        INSERT INTO bookmarks (userId, postId)
+        VAlUES(${userId}, ${postId})
+      `;
+      return {success: true}
+    } catch(error) {
+      console.error(error)
+    }
+  } else if (action === 'remove') {
+    try {
+      await sql`
+        DELETE FROM bookmarks
+        WHERE userId=${userId} AND postId=${postId}
+      `;
+      return {success: true}
+    } catch(error) {
+      console.error(error)
+    }
+  }
+}
