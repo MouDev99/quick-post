@@ -23,11 +23,11 @@ import { useSession } from 'next-auth/react';
 const CreatePost = memo( function CreatePost() {
   const [showPicker, setShowPicker] = useState(false);
   const [showPollModal, setShowPollModal] = useState(false);
-  const [imgSrc, setImgSrc] = useState('');
+  const [imgSrc, setImgSrc] = useState<string | null>('');
   const [content, setContent] = useState('');
 
   const initialState: PostState = {errors: {}};
-  const [state, dispatch] = useFormState<PostState>(createPostAction, initialState);
+  const [state, dispatch] = useFormState(createPostAction, initialState);
   const [formData, setFormData] = useState(new FormData());
   const [file, setFile] = useState<File>();
 
@@ -79,9 +79,9 @@ const CreatePost = memo( function CreatePost() {
   return (
     <div>
       <div className='flex justify-center py-3 w-full  sm:w-5/6 mx-auto border-b border-gray-300 '>
-        <Link href='/profile' className='h-full w-fit'>
+        <Link href='/profile' className='h-fit w-fit'>
           <UserAvatar
-            styles={'sm:w-16 sm:h-16'}
+            styles={'w-fit h-fit sm:w-16 sm:h-16'}
             userProfileUrl={null}
             userId={session?.user?.id?? ''}
           />
@@ -149,7 +149,7 @@ const CreatePost = memo( function CreatePost() {
               }
               {showPollModal &&
                 <Modal
-                  styles='w-96 h-fit m-auto mt-56 md:left-2/4	md:top-44 md:m-0 z-50 bg-white'
+                  styles='w-96 h-fit m-auto mt-56 md:left-2/4	md:top-48 md:m-0 z-50 bg-white'
                   onClose={() => setShowPollModal(false)}
                 >
                   <PollCreator />
@@ -173,7 +173,7 @@ const CreatePost = memo( function CreatePost() {
             className='w-fit p-1 ml-auto cursor-pointer rounded-full	hover:bg-gray-200 transition-all duration-100'
             onClick={() => setImgSrc(null)}
           >
-            <XMarkIcon className='w-6'/>
+            <XMarkIcon className='w-6 text-black'/>
           </div>
           <Image
             src={imgSrc}

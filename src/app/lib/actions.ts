@@ -6,7 +6,7 @@ import { z } from "zod";
 import { sql } from '@vercel/postgres';
 import bcrypt from 'bcryptjs';
 import { redirect } from 'next/navigation';
-import {PostState, SignUpState } from './definitions';
+import {CommentState, PostState, SignUpState } from './definitions';
 // ...
 
 const FormSchema = z.object({
@@ -22,7 +22,7 @@ const FormSchema = z.object({
 
 const SignUpUser = FormSchema.omit({id: true, confirmPassword: true});
 
-export async function signUp(prevState: SignUpState, formData: FormData) {
+export async function signUp(prevState: SignUpState, formData: FormData): Promise<any> {
 
   const validatedFields = SignUpUser.safeParse({
     username: formData.get('username'),
@@ -101,7 +101,9 @@ const PostSchema = z.object({
   imgUrl: z.string().nullable(),
 });
 
-export async function createPostAction(prevState: PostState, formData: FormData) {
+export async function createPostAction(
+  prevState: PostState, formData: FormData
+): Promise<PostState> {
 
   const validatedFields = PostSchema.safeParse({
     userId: parseInt(formData.get('userId')?.toString() ?? '0'),
@@ -189,4 +191,50 @@ export async function addOrRemoveFromBookmarks(
       console.error(error)
     }
   }
+}
+
+const CommentSchema = z.object({
+  content: z.string()
+    .min(5, { message: 'comment must be at least 5 chars long.' })
+    .max(300, { message: 'comment must be at most 300 chars long.' }),
+});
+
+export async function CreateCommentAction(
+  postId: string,
+  userId: string | undefined,
+  prevState: CommentState,
+  formData: FormData
+): Promise<CommentState> {
+
+  if (!postId || !userId) {
+    return {message: 'Something went Wrong!'}
+  }
+
+  const validatedFields = CommentSchema.safeParse({
+    content: formData.get("content"),
+  })
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors
+    }
+  }
+
+  const { content } = validatedFields.data;
+  const userIdInteger = parseInt(userId);
+
+  console.log(content, userIdInteger, postId);
+
+  try {
+    await sql`
+      INSERT INTO comments (userid, postid, content)
+      VALUES (${userIdInteger}, ${postId}, ${content})
+    `;
+  } catch (error) {
+    console.error(error)
+    return {
+      message: 'Database Error: Failed to comment.'
+    };
+  }
+  return {success: true}
 }

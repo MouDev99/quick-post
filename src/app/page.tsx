@@ -14,7 +14,7 @@ export default function Index() {
       <div className="p-4 m-2 max-[190px]:hidden self-center">
         <Logo />
       </div>
-      <div className="shadow-sm px-2 py-4">
+      <div className="text-black shadow-sm px-2 py-4">
         <h1 className="font-bold text-2xl uppercase mt-3 mb-5 sm:text-3xl">Explore. Share. Connect.</h1>
         <h2 className="font-semibold text-2xl my-3 sm:text-3xl">Join today.</h2>
         <LoginForm />

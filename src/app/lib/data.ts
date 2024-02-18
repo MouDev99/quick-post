@@ -1,13 +1,10 @@
 'use server';
 
 import { sql } from '@vercel/postgres';
-import { unstable_noStore as noStore } from 'next/cache';
 import { PostType } from './definitions';
 
 export async function fetchPosts() {
-  // Add noStore() here prevent the response from being cached.
-  // This is equivalent to in fetch(..., {cache: 'no-store'}).
-  noStore();
+
   try {
     const query = `
       SELECT
@@ -17,13 +14,16 @@ export async function fetchPosts() {
         users."userProfileUrl",
         ARRAY_AGG(DISTINCT likes.userId) AS "likedByUsers",
         ARRAY_AGG(DISTINCT bookmarks.userId) AS "bookmarkedByUsers",
-        COUNT(likes.userId) AS "numOfLikes"
+        COUNT(DISTINCT likes.userId) AS "numOfLikes",
+        COUNT(DISTINCT comments.id) AS "numOfCmnts"
       FROM
         posts
       JOIN
         users ON posts."userId" = users.id
       LEFT JOIN
         likes ON posts.id = likes.postId
+      LEFT JOIN
+        comments ON posts.id = comments.postid
       LEFT JOIN (
         SELECT DISTINCT postId, userId
         FROM bookmarks
@@ -42,7 +42,7 @@ export async function fetchPosts() {
 }
 
 export const fetchPostById = async (id: string) => {
-  noStore();
+
   try {
     const query = `
       SELECT
@@ -52,13 +52,16 @@ export const fetchPostById = async (id: string) => {
         users."userProfileUrl",
         ARRAY_AGG(likes.userId) AS "likedByUsers",
         ARRAY_AGG(bookmarks.userId) AS "bookmarkedByUsers",
-        COUNT(likes.userId) AS "numOfLikes"
+        COUNT(DISTINCT likes.userId) AS "numOfLikes",
+        COUNT(DISTINCT comments.id) AS "numOfCmnts"
       FROM
         posts
       JOIN
         users on posts."userId" = users.id
       LEFT JOIN
         likes ON posts.id = likes.postId
+      LEFT JOIN
+        comments ON posts.id = comments.postid
       LEFT JOIN (
         SELECT DISTINCT postId, userId
         FROM bookmarks
@@ -73,5 +76,29 @@ export const fetchPostById = async (id: string) => {
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch posts data.');
+  }
+}
+
+export async function fetchPostCommentsById(postId: string) {
+
+  try {
+    const query = `
+    SELECT
+      comments.content,
+      comments."createdAt",
+      users.username,
+      users."userProfileUrl"
+    FROM
+      comments
+    JOIN
+      users ON comments.userid = users.id
+    WHERE
+      postid = '${postId}';
+    `;
+    const data = await sql.query(query);
+    return data.rows
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch comments data.');
   }
 }

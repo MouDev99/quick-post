@@ -27,7 +27,7 @@ export default function UserInfo() {
             <h4 className='leading-4 text-[#536471]'>{user?.email}</h4>
           </div>
         </div>
-        <EllipsisHorizontalIcon className='w-7 hidden md:block'/>
+        <EllipsisHorizontalIcon className='text-black w-7 hidden md:block'/>
       </button>
       {showMore &&
         <div className='absolute -top-20 flex items-center h-[75px] w-full border-[1px] border-gray-200 rounded-lg shadow-lg'>

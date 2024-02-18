@@ -39,6 +39,7 @@ export default function PostCard(
     username,
     userProfileUrl,
     numOfLikes,
+    numOfCmnts,
     likedByUsers,
     bookmarkedByUsers,
     createdAt
@@ -95,7 +96,7 @@ export default function PostCard(
             </time>
           </span>
           <div
-            className='p-1 w-fit h-fit hover:bg-blue-100 rounded-full cursor-pointer'
+            className='p-1 w-fit h-fit hover:bg-blue-100 rounded-full cursor-pointer text-black'
             onClick={() => setShowPostActions(true)}
           >
             <EllipsisHorizontalIcon className="w-6" />
@@ -137,22 +138,22 @@ export default function PostCard(
           }
         </div>
 
-        <div className="flex justify-between md:justify-around mt-auto">
-          <div className="flex items-center p-1 rounded-full text-[#536471] cursor-pointer hover:text-blue-700">
+        <div className="flex justify-start mt-auto">
+          <div className="flex flex-1 items-center p-1 rounded-full text-[#536471] cursor-pointer hover:text-blue-700">
             <div className="flex items-center justify-center p-1 rounded-full cursor-pointer hover:bg-blue-200 hover:text-blue-500">
               <ChatBubbleOvalLeftEllipsisIcon className="w-6" />
             </div>
-            <span className="text-sm">{0}</span>
+            <span className="text-sm">{numOfCmnts}</span>
           </div>
 
-          <div className="flex items-center p-1 rounded-full text-[#536471] cursor-pointer hover:text-green-700">
+          <div className="flex flex-1 items-center p-1 rounded-full text-[#536471] cursor-pointer hover:text-green-700">
             <div className="flex items-center justify-center p-1 rounded-full cursor-pointer hover:bg-green-200 hover:text-green-500">
-              <ShareIcon className="w-6" />
+              <ShareIcon className="w-5" />
             </div>
             <span className="text-sm">{0}</span>
           </div>
 
-          <div className="flex items-center p-1 rounded-full text-[#536471] cursor-pointer hover:text-red-700 ">
+          <div className="flex flex-1 items-center p-1 rounded-full text-[#536471] cursor-pointer hover:text-red-700 ">
             <button
               className="flex items-center justify-center p-1 rounded-full hover:bg-red-200 hover:text-red-500"
               disabled={likeDisabled}
@@ -184,7 +185,7 @@ export default function PostCard(
             <span className="text-sm">{likes}</span>
           </div>
 
-          <div className="flex items-center p-1 rounded-full text-[#536471] cursor-pointer hover:text-purple-700 hover:font-semibold">
+          <div className="flex flex-1 items-center p-1 rounded-full text-[#536471] cursor-pointer hover:text-purple-700 hover:font-semibold">
             <button
               className="flex items-center justify-center p-1 rounded-full hover:bg-purple-200 hover:text-purple-500"
               disabled={bookmarkDisabled}

@@ -39,7 +39,7 @@ function NavItem({item}: {item: any}) {
     <Link
       key={title}
       href={link}
-      className="flex h-[48px] items-center justify-center gap-2 rounded-md p-3 text-md font-medium hover:bg-gray-200 md:flex-none md:justify-start md:p-2 md:px-3"
+      className="flex h-[48px] items-center justify-center text-black gap-2 rounded-md p-3 text-md font-medium hover:bg-gray-200 md:flex-none md:justify-start md:p-2 md:px-3"
     >
       <Icon className="w-6" />
       <p className="hidden md:block">{title}</p>

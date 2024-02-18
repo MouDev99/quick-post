@@ -37,7 +37,7 @@ export default function PostActions({user}: {user: any}) {
 
   if (session?.user?.id == user.id) {
     return (
-      <div className="absolute z-50 top-0 right-0 bg-white rounded-lg border border-gray-300 shadow-md">
+      <div className="absolute z-50 top-0 right-0 bg-white rounded-lg border border-gray-300 shadow-md text-black">
         <button className='flex justify-start items-center w-full p-2 rounded-lg hover:bg-gray-100 cursor-pointer'
         >
           <PencilIcon className='w-5' />
@@ -79,7 +79,7 @@ function ActionItem({item, user}: {item: any, user: any}) {
   const { title, Icon } = item;
 
   return (
-    <button className='flex justify-start items-center w-full p-2 rounded-lg hover:bg-gray-100 cursor-pointer'
+    <button className='flex justify-start items-center w-full p-2 rounded-lg hover:bg-gray-100 cursor-pointer text-black'
     >
       <Icon className='w-5'/>
       <span className='text-md font-semibold ml-2'>

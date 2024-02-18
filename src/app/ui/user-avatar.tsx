@@ -22,12 +22,12 @@ export default function UserAvatar(
   if (!imgSrc) return <NoProfilePicAvatar />
 
   return (
-    <div className='border-2 border-gray-600 rounded-full overflow-hidden '>
+    <div className='border-2 border-gray-600 rounded-full overflow-hidden w-fit'>
       <Image
         width={45}
         height={45}
         src={imgSrc}
-        className={'rounded-full object-cover aspect-square ' + styles}
+        className={'rounded-full object-cover aspect-square' + styles}
         alt='profile-pic'
       />
     </div>
@@ -37,7 +37,7 @@ export default function UserAvatar(
 function NoProfilePicAvatar() {
 
   return (
-    <div className='h-full p-2 rounded-full bg-[#CDD6DC]'>
+    <div className='w-fit h-full p-2 rounded-full bg-[#CDD6DC]'>
       <UserIconSolid className='w-8 text-[#677685]' />
     </div>
   )

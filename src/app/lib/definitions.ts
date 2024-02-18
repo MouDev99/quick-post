@@ -26,6 +26,7 @@ export type PostType = {
   email: string,
   userProfileUrl: string | null,
   numOfLikes: string,
+  numOfCmnts: string,
   likedByUsers: any[];
   bookmarkedByUsers: any[]
 };
@@ -33,6 +34,24 @@ export type PostType = {
 export type PostState = {
   errors?: {
     content?: string[] | null;
+    dbError?: string[]
   },
+  success?: boolean
+}
+
+export type CommentType = {
+  id: number,
+  userid: number,
+  content: string
+  createdAt: Date
+  username: string,
+  userProfileUrl: string
+}
+
+export type CommentState = {
+  errors?: {
+    content?: string[] | null;
+  },
+  message?: string
   success?: boolean
 }

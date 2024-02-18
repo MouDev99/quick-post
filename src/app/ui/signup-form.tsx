@@ -11,7 +11,7 @@ import { useEdgeStore } from '../lib/edgestroe';
 
 export default function SignupFrom() {
   const initialState: SignUpState = {message: null, errors: {}};
-  const [state, dispatch] = useFormState<SignUpState>(signUp, initialState);
+  const [state, dispatch] = useFormState(signUp, initialState);
   const { pending } = useFormStatus();
   const [formData, setFormData] = useState(new FormData());
 
@@ -64,12 +64,12 @@ export default function SignupFrom() {
 
   return (
     <form onSubmit={handleFormSubmit} className='grid grid-rows-6 grid-cols-2 gap-2 max-w-fit mx-auto max-[425px]:flex max-[425px]:flex-col'>
-      <div className="flex flex-col justify-center text-center col-span-2 row-span-1 border border-gray-200 rounded-lg shadow-md">
-        <h1 className="text-4xl font-bold">Sign Up</h1>
+      <div className="flex flex-col justify-center text-center text-black col-span-2 row-span-1 border border-gray-200 rounded-lg shadow-md">
+        <h1 className="text-3xl font-bold">Sign Up</h1>
         <p className="text-lg text-gray-500">Create your account and start exploring.</p>
       </div>
       <div className='flex flex-col justify-between row-span-4 p-2 border border-gray-200 rounded-lg shadow-md'>
-        <div className="flex flex-col mt-4">
+        <div className="flex flex-col mt-4 text-black">
           <label htmlFor="username" className="text-lg font-semibold">Username</label>
           <input
             id="username"
@@ -89,7 +89,7 @@ export default function SignupFrom() {
               ))}
           </div>
         </div>
-        <div className="flex flex-col mt-2">
+        <div className="flex flex-col mt-2 text-black">
           <label htmlFor="email" className="text-lg font-semibold">Email</label>
           <input
             id="email"
@@ -109,7 +109,7 @@ export default function SignupFrom() {
               ))}
           </div>
         </div>
-        <div className="flex flex-col mt-2">
+        <div className="flex flex-col mt-2 text-black">
           <label htmlFor="password" className="text-lg font-semibold">Password</label>
           <input
             id="password"
@@ -129,7 +129,7 @@ export default function SignupFrom() {
               ))}
           </div>
         </div>
-        <div className="flex flex-col mt-2">
+        <div className="flex flex-col mt-2 text-black">
           <label htmlFor="confirmPassword" className="text-lg font-semibold">Confirm password</label>
           <input
             id="confirmPassword"
@@ -171,7 +171,7 @@ export default function SignupFrom() {
               name='profile-pic'
               onChange={handleImgUpload}
             />
-          <span className="flex text-sm px-4 py-2 border border-gray-300 rounded-xl hover:bg-gray-100">
+          <span className="flex text-sm text-black px-4 py-2 border border-gray-300 rounded-xl hover:bg-gray-100">
            <ArrowUpTrayIcon className='w-4 mr-1' /> Upload Profile Picture
           </span>
         </label>

@@ -10,11 +10,11 @@ export default function LoginForm() {
 
   return (
     <form action={dispatch} className="my-2 max-w-full">
-      <div className="flex flex-col">
+      <div className="flex flex-col text-black">
         <label htmlFor="username" className="text-lg font-semibold">Username</label>
         <input id="username" name='username' type="text" placeholder="Username" className="w-full px-3 py-2 rounded-xl border-2 border-gray-300" required/>
       </div>
-      <div className="flex flex-col mt-2">
+      <div className="flex flex-col mt-2 text-black">
         <label htmlFor="password" className="text-lg font-semibold">Password</label>
         <input id="password" name="password" type="password" placeholder="Password" className="w-full px-3 py-2 rounded-xl border-2 border-gray-300" required/>
       </div>
