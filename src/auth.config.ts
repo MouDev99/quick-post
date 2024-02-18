@@ -18,7 +18,7 @@ export const authConfig = {
       return true;
     },
     session({ session, token }) {
-      session.user.id = token.sub;
+      session.user.id = token.sub || '';
       return session // The return type will match the one returned in `useSession()`
     },
   },
