@@ -11,7 +11,7 @@ export default function TabNavigation(
   const activeClass = 'font-extrabold text-gray-800 border-b-4 border-[#3A98EB]';
 
   return (
-    <div className="sticky top-0 z-50 border-b border-gray-300 bg-white">
+    <div className="sticky top-0 z-50 h-14 border-b border-gray-300 bg-white">
       <div className=" grid grid-rows-2 grid-cols-2 gap-1 sm:grid-rows-1 sm:grid-cols-3 border-b-[1px] border-gray-200 shadow-sm">
         <Link
           href='/home'
@@ -25,7 +25,7 @@ export default function TabNavigation(
          </button>
         </div>
         <div
-          className='flex justify-center items-center w-32 h-12 cursor-pointer hover:bg-gray-200'
+          className='flex justify-center items-center w-32 h-14 cursor-pointer hover:bg-gray-200'
           onClick={() => setActiveTab('ForYou')}
         >
           <span className={`flex items-center h-full text-md font-semibold text-gray-600 ${activeTab === "ForYou" ? activeClass : ''}`}>
@@ -33,7 +33,7 @@ export default function TabNavigation(
           </span>
         </div>
         <div
-          className='flex justify-center items-center w-32 h-12 cursor-pointer hover:bg-gray-200'
+          className='flex justify-center items-center w-32 h-14 cursor-pointer hover:bg-gray-200'
           onClick={() => setActiveTab('Following')}
         >
           <span className={`flex items-center h-full text-md font-semibold text-gray-600 ${activeTab === "Following" ? activeClass : ''}`}>

@@ -5,6 +5,7 @@ import SideNav from "./ui/sidenav/sidenav";
 import { auth } from "@/auth";
 import { EdgeStoreProvider } from "./lib/edgestroe";
 import SessionProvider from './session-provider';
+import RightSideBar from "./ui/right-sidebar/right-sidebar";
 
 const robot_mono = Roboto_Mono({
   subsets: ['latin'],
@@ -32,6 +33,7 @@ export default async function RootLayout({
             <div className="flex px-1 sm:px-6 h-fit bg-white justify-center">
               {session?.user && <SideNav />}
               {children}
+              {session?.user && <RightSideBar />}
             </div>
           </SessionProvider>
         </EdgeStoreProvider>

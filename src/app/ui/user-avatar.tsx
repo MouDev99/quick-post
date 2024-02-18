@@ -1,4 +1,4 @@
-'user client';
+'use client';
 
 import Image from 'next/image';
 import { UserIcon as UserIconSolid } from '@heroicons/react/24/solid';
