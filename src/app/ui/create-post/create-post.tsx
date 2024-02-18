@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useEffect, useState } from 'react';
+import { ChangeEvent, memo, useEffect, useState } from 'react';
 import Link from 'next/link';
 import EmojiPicker from './emoji-picker';
 import PollCreator from './poll-creator';
@@ -34,7 +34,7 @@ const CreatePost = memo( function CreatePost() {
   const { edgestore } = useEdgeStore();
   const { data: session } = useSession();
 
-  const handleImgUpload = async (e) => {
+  const handleImgUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target?.files;
     if (!files) return;
 
@@ -62,13 +62,12 @@ const CreatePost = memo( function CreatePost() {
     });
   };
 
-  const handleFormSubmit = async (e) => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>)=> {
     e.preventDefault(); // Prevent the default form submission
 
     const ppUrl = await storeImgFile(file);
     if (ppUrl) formData.set('imgUrl', ppUrl);
     formData.set('userId', '' + session?.user?.id)
-    // dispatch(formData);
     dispatch(formData);
   };
 

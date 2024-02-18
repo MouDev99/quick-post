@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import Image from 'next/image';
 import {ArrowUpTrayIcon, ExclamationCircleIcon } from '@heroicons/react/24/outline';
 import {UserIcon as UserIconSolid} from '@heroicons/react/24/solid';
@@ -20,7 +20,7 @@ export default function SignupFrom() {
   const [file, setFile] = useState<File>();
   const { edgestore } = useEdgeStore();
 
-  const handleImgUpload = async (e) => {
+  const handleImgUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target?.files;
     if (!files) return;
 
@@ -48,12 +48,12 @@ export default function SignupFrom() {
     });
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
     formData.set(name, value);
   };
 
-  const handleFormSubmit = async (e) => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent the default form submission
 
     const ppUrl = await storeImgFile(file);
