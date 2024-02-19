@@ -7,10 +7,10 @@ export default function PostButton() {
       <button
         className='flex justify-center items-center w-full h-full rounded-full md:rounded-3xl font-bold bg-[#3A98EB] hover:bg-blue-500 transition-colors duration-300'
       >
-        <div className='hidden md:block text-lg text-white'>
+        <div className='hidden lg:block text-lg text-white'>
           Post
         </div>
-        <PencilSquareIcon className='w-7 text-white md:hidden'/>
+        <PencilSquareIcon className='w-7 text-white lg:hidden'/>
       </button>
     </div>
   )

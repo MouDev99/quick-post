@@ -77,7 +77,7 @@ export default function PostCard(
   }, [showPostActions])
 
   return (
-    <div className={`h-fit min-h-48 flex pt-2 mt-2 border-b border-gray-300 ${idx === 0 ? 'border-t border-gray-300' : ''}`}>
+    <div className={`h-fit min-h-48 flex pt-2 pr-1 mt-2 border-b border-gray-300 ${idx === 0 ? 'border-t border-gray-300' : ''}`}>
       <div className="w-fit px-2 h-full">
         <Link href='/profile' className='h-full w-fit'>
           <UserAvatar

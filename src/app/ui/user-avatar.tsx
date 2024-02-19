@@ -27,7 +27,7 @@ export default function UserAvatar(
         width={45}
         height={45}
         src={imgSrc}
-        className={'rounded-full object-cover aspect-square' + styles}
+        className={'rounded-full min-w-8 object-cover aspect-square' + styles}
         alt='profile-pic'
       />
     </div>

@@ -9,7 +9,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState('ForYou');
 
   return (
-    <div className='ml-1 border-x border-gray-200 max-w-[560px] w-full sm:w-4/5 md:w-3/3'>
+    <div className='ml-1 border-x border-gray-200 max-w-[580px] w-full sm:w-4/5 md:w-3/3'>
       <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab}/>
       <CreatePost />
       {activeTab === 'ForYou' && <ForYou />}

@@ -76,16 +76,16 @@ const CreatePost = memo( function CreatePost() {
   }, [state])
 
   return (
-    <div>
-      <div className='flex justify-center py-3 w-full  sm:w-5/6 mx-auto border-b border-gray-300 '>
+    <div className='px-1'>
+      <div className='flex justify-center pb-2 w-full mx-auto border-b border-gray-300 '>
         <Link href='/profile' className='h-fit w-fit'>
           <UserAvatar
-            styles={'w-fit h-fit sm:w-16 sm:h-16'}
+            styles={'w-fit h-fit w-14'}
             userProfileUrl={null}
             userId={session?.user?.id?? ''}
           />
         </Link>
-        <form onSubmit={handleFormSubmit} className='sm:w-5/6 ml-2'>
+        <form onSubmit={handleFormSubmit} className='w-full max-w-[340px] ml-2'>
           <textarea
             className='w-full max-h-44 h-24 text-md text-gray-700 outline-none rounded-lg p-3 border-b focus:h-28 focus:shadow-md transition-all duration-500'
             id='content'

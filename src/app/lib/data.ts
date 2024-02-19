@@ -102,3 +102,29 @@ export async function fetchPostCommentsById(postId: string) {
     throw new Error('Failed to fetch comments data.');
   }
 }
+
+export async function fetchUsersToFollow(userId: string | undefined) {
+  if (!userId) [];
+
+  try {
+    const query = `
+      SELECT
+        id, username, "userProfileUrl", "createdAt"
+      FROM users
+      WHERE id NOT IN (
+        SELECT
+          users.id
+        FROM
+          followers
+        JOIN
+          users ON followers.user_id = users.id
+        WHERE
+          follower_id = ${userId}
+     ) AND id != ${userId}`;
+    const data = await sql.query(query);
+    return data.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch users data.');
+  }
+}

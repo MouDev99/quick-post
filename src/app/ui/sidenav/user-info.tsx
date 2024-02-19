@@ -13,7 +13,7 @@ export default function UserInfo() {
   return (
     <div className='h-[58px] mt-auto mb-2 relative'>
       <button
-        className='flex h-full items-center justify-between  w-full px-1 py-4 shadow-lg rounded-3xl border-[1px] border-gray-200 hover:bg-gray-200'
+        className='flex h-full items-center justify-between w-full px-1 py-4 shadow-lg rounded-3xl border-[1px] border-gray-200 hover:bg-gray-200'
         onClick={() => setShowMore(!showMore)}
       >
         <div className='flex items-center gap-1 w-full'>
@@ -22,12 +22,12 @@ export default function UserInfo() {
             userProfileUrl={null}
             userId={user?.id?? ''}
           />
-          <div className='flex-col items-start hidden md:flex'>
+          <div className='flex-col items-start hidden lg:flex'>
             <h3 className='leading-5 text-base font-extrabold text-[#0f1419]'>@{user?.name}</h3>
             <h4 className='leading-4 text-[#536471]'>{user?.email}</h4>
           </div>
         </div>
-        <EllipsisHorizontalIcon className='text-black w-7 hidden md:block'/>
+        <EllipsisHorizontalIcon className='text-black w-7 hidden lg:block'/>
       </button>
       {showMore &&
         <div className='absolute -top-20 flex items-center h-[75px] w-full border-[1px] border-gray-200 rounded-lg shadow-lg'>
@@ -37,7 +37,7 @@ export default function UserInfo() {
             onClick={() => signOut()}
           >
            <PowerIcon className="w-6 text-red-800"/>
-          <span className="hidden md:inline">Logout</span>
+          <span className="hidden lg:inline">Logout</span>
           </button>
         </div>
       }

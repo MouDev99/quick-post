@@ -24,7 +24,7 @@ const navItems = [
 export default async function SideNav() {
 
   return (
-    <div className='sticky top-0 h-screen flex flex-col border-l border-gray-200 md:w-72'>
+    <div className='sticky top-0 h-screen flex flex-col border-x border-gray-200 xl:w-72'>
       {navItems.map((item, i) => <NavItem key={i} item={item}/>)}
       <PostButton />
       <UserInfo />
@@ -39,10 +39,10 @@ function NavItem({item}: {item: any}) {
     <Link
       key={title}
       href={link}
-      className="flex h-[48px] items-center justify-center text-black gap-2 rounded-md p-3 text-md font-medium hover:bg-gray-200 md:flex-none md:justify-start md:p-2 md:px-3"
+      className="flex h-[48px] items-center justify-center text-black gap-2 rounded-md p-3 text-md font-medium hover:bg-gray-200 lg:flex-none lg:justify-start lg:p-2 lg:px-3"
     >
       <Icon className="w-6" />
-      <p className="hidden md:block">{title}</p>
+      <p className="hidden lg:block">{title}</p>
     </Link>
   )
 }

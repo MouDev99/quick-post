@@ -2,11 +2,12 @@
 
 import { signIn } from '../../auth';
 import { AuthError } from 'next-auth';
-import { z } from "zod";
+import { tuple, z } from "zod";
 import { sql } from '@vercel/postgres';
 import bcrypt from 'bcryptjs';
 import { redirect } from 'next/navigation';
 import {CommentState, PostState, SignUpState } from './definitions';
+import { runInNewContext } from 'vm';
 // ...
 
 const FormSchema = z.object({
@@ -136,60 +137,68 @@ export async function createPostAction(
 }
 
 export async function likeOrDislikePost(
-  action: string,
+  action: "like" | "dislike",
   userId: number | undefined,
   postId: string
 ) {
 
-  if (action === 'like') {
-    try {
-      await sql`
-        INSERT INTO likes (userId, postId)
-        VAlUES(${userId}, ${postId})
-      `;
-      return {success: true}
-    } catch(error) {
-      console.error(error)
-    }
-  } else if (action === 'dislike') {
-    try {
-      await sql`
-        DELETE FROM likes
-        WHERE userId=${userId} AND postId=${postId}
-      `;
-      return {success: true}
-    } catch(error) {
-      console.error(error)
-    }
+  // const followQuery = `
+  //   INSERT INTO followers (user_id, follower_id)
+  //   VALUES (${userId}, ${followerId})
+  // `;
+  // const unfollowQuery = `
+  //   DELETE FROM followers
+  //   WHERE user_id = ${userId} AND follower_id = ${followerId}
+  // `;
+
+  const likeQuery = `
+    INSERT INTO likes (userId, postId)
+    VAlUES (${userId}, '${postId}')
+  `;
+  const dislikeQuery = `
+    DELETE FROM likes
+    WHERE userId = ${userId} AND postId = '${postId}'
+  `;
+
+  let query;
+  if (action === "like") query = likeQuery;
+  else if (action === "dislike") query = dislikeQuery;
+
+  if (!query) return;
+
+  try {
+    await sql.query(query);
+    return {success: true}
+  } catch(error) {
+    console.error(error)
   }
 }
 
 export async function addOrRemoveFromBookmarks(
-  action: string,
+  action: "add" | "remove",
   userId: number | undefined,
   postId: string
 ) {
+  const addQuery = `
+    INSERT INTO bookmarks (userId, postId)
+    VAlUES (${userId}, '${postId}')
+  `;
+  const removeQuery = `
+    DELETE FROM bookmarks
+    WHERE userId = ${userId} AND postId = '${postId}'
+  `;
 
-  if (action === 'add') {
-    try {
-      await sql`
-        INSERT INTO bookmarks (userId, postId)
-        VAlUES(${userId}, ${postId})
-      `;
-      return {success: true}
-    } catch(error) {
-      console.error(error)
-    }
-  } else if (action === 'remove') {
-    try {
-      await sql`
-        DELETE FROM bookmarks
-        WHERE userId=${userId} AND postId=${postId}
-      `;
-      return {success: true}
-    } catch(error) {
-      console.error(error)
-    }
+  let query;
+  if (action === "add") query = addQuery;
+  else if (action === "remove") query = removeQuery;
+
+  if (!query) return;
+
+  try {
+    await sql.query(query);
+    return {success: true}
+  } catch(error) {
+    console.error(error)
   }
 }
 
@@ -223,8 +232,6 @@ export async function CreateCommentAction(
   const { content } = validatedFields.data;
   const userIdInteger = parseInt(userId);
 
-  console.log(content, userIdInteger, postId);
-
   try {
     await sql`
       INSERT INTO comments (userid, postid, content)
@@ -237,4 +244,32 @@ export async function CreateCommentAction(
     };
   }
   return {success: true}
+}
+
+export async function followOrUnfollowUser(
+  action: "follow" | "unfollow",
+  followerId: number | undefined,
+  userId: number
+) {
+  const followQuery = `
+    INSERT INTO followers (user_id, follower_id)
+    VALUES (${userId}, ${followerId})
+  `;
+  const unfollowQuery = `
+    DELETE FROM followers
+    WHERE user_id = ${userId} AND follower_id = ${followerId}
+  `;
+
+  let query;
+  if (action === 'follow') query = followQuery;
+  else if (action === 'unfollow') query = unfollowQuery;
+
+  if (!query) return;
+
+  try {
+    await sql.query(query);
+    return {success: true}
+  } catch (error) {
+    console.error(error);
+  }
 }
