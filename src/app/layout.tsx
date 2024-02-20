@@ -24,6 +24,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
+  const isLoggedIn = session?.user ? true : false;
 
   return (
     <html lang="en">
@@ -31,11 +32,11 @@ export default async function RootLayout({
         <EdgeStoreProvider>
           <SessionProvider session={session}>
             <div className="flex px-1 sm:px-6 h-fit bg-white justify-center">
-              {session?.user && <SideNav />}
-              <div className="ml-1 border-x border-gray-200 max-w-[580px] w-full sm:w-4/5 md:w-3/3">
+              {isLoggedIn && <SideNav />}
+              <div className={isLoggedIn ? 'ml-1 border-x border-gray-200 max-w-[580px] w-full sm:w-4/5 md:w-3/3' : ''}>
                 {children}
               </div>
-              {session?.user && <RightSideBar />}
+              {isLoggedIn && <RightSideBar />}
             </div>
           </SessionProvider>
         </EdgeStoreProvider>
