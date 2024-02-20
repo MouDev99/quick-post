@@ -128,3 +128,46 @@ export async function fetchUsersToFollow(userId: string | undefined) {
     throw new Error('Failed to fetch users data.');
   }
 }
+
+export async function fetchFollowedUsersPosts(userId: string | undefined) {
+  if (!userId) return [];
+
+  try {
+    const query = `
+      SELECT
+        posts.*,
+        users.email,
+        users.username,
+        users."userProfileUrl",
+        ARRAY_AGG(likes.userId) AS "likedByUsers",
+        ARRAY_AGG(bookmarks.userId) AS "bookmarkedByUsers",
+        COUNT(DISTINCT likes.userId) AS "numOfLikes",
+        COUNT(DISTINCT comments.id) AS "numOfCmnts"
+      FROM
+        posts
+      JOIN
+        users on posts."userId" = users.id
+      LEFT JOIN
+        likes ON posts.id = likes.postId
+      LEFT JOIN
+        comments ON posts.id = comments.postid
+      LEFT JOIN (
+        SELECT DISTINCT postId, userId
+        FROM bookmarks
+      ) AS bookmarks ON posts.id = bookmarks.postId
+      WHERE posts."userId" IN (
+        SELECT user_id from followers
+        WHERE follower_id = ${userId}
+      )
+      GROUP BY
+        posts.id, users.id
+      ORDER BY
+        posts."createdAt" DESC;
+      `;
+    const data = await sql.query(query);
+    return data.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error("Failed to fetch followed users' posts.");
+  }
+}
