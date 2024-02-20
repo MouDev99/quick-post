@@ -139,21 +139,21 @@ export default function PostCard(
         </div>
 
         <div className="flex justify-start mt-auto">
-          <div className="flex flex-1 items-center p-1 rounded-full text-[#536471] cursor-pointer hover:text-blue-700">
+          <div className="flex flex-1 items-center p-1 text-[#536471]">
             <div className="flex items-center justify-center p-1 rounded-full cursor-pointer hover:bg-blue-200 hover:text-blue-500">
               <ChatBubbleOvalLeftEllipsisIcon className="w-6" />
             </div>
-            <span className="text-sm">{numOfCmnts}</span>
+            <span className="text-sm cursor-pointer hover:text-blue-700">{numOfCmnts}</span>
           </div>
 
-          <div className="flex flex-1 items-center p-1 rounded-full text-[#536471] cursor-pointer hover:text-green-700">
+          <div className="flex flex-1 items-center p-1 rounded-full text-[#536471]">
             <div className="flex items-center justify-center p-1 rounded-full cursor-pointer hover:bg-green-200 hover:text-green-500">
               <ShareIcon className="w-5" />
             </div>
-            <span className="text-sm">{0}</span>
+            <span className="text-sm cursor-pointer hover:text-green-700">{0}</span>
           </div>
 
-          <div className="flex flex-1 items-center p-1 rounded-full text-[#536471] cursor-pointer hover:text-red-700 ">
+          <div className="flex flex-1 items-center p-1 rounded-full text-[#536471]">
             <button
               className="flex items-center justify-center p-1 rounded-full hover:bg-red-200 hover:text-red-500"
               disabled={likeDisabled}
@@ -182,12 +182,12 @@ export default function PostCard(
             >
               <HeartIcon className={liked ? 'w-6 text-red-500 fill-[#f44336]' : 'w-6'} />
             </button>
-            <span className="text-sm">{likes}</span>
+            <span className="text-sm cursor-pointer hover:text-red-700">{likes}</span>
           </div>
 
-          <div className="flex flex-1 items-center p-1 rounded-full text-[#536471] cursor-pointer hover:text-purple-700 hover:font-semibold">
+          <div className="flex flex-1 items-center p-1 rounded-full text-[#536471]">
             <button
-              className="flex items-center justify-center p-1 rounded-full hover:bg-purple-200 hover:text-purple-500"
+              className="flex items-center justify-center p-1 rounded-full hover:bg-purple-200 hover:text-purple-700"
               disabled={bookmarkDisabled}
               onClick={async () => {
                 try {

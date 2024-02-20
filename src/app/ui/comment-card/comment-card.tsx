@@ -9,10 +9,10 @@ export default function CommentCard({ comment }: { comment: CommentType }) {
       <div className="flex items-start justify-start pl-2 pb-2 space-x-1">
         <Link href={'/username'} className="w-12">
           <UserAvatar
-              userId={comment.userid}
-              userProfileUrl={comment.userProfileUrl}
-              styles=""
-            />
+            userId={comment.userid}
+            userProfileUrl={comment.userProfileUrl}
+            styles=""
+          />
         </Link>
         <div className="text-sm w-fit">
           <Link href={'/username'}>

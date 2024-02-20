@@ -37,7 +37,10 @@ export default function PostActions({user}: {user: any}) {
 
   if (session?.user?.id == user.id) {
     return (
-      <div className="absolute z-50 top-0 right-0 bg-white rounded-lg border border-gray-300 shadow-md text-black">
+      <div
+        className="absolute z-50 top-0 right-0 bg-white rounded-lg border border-gray-300 shadow-md text-black"
+        onClick={(e) => e.nativeEvent.stopImmediatePropagation()}
+      >
         <button className='flex justify-start items-center w-full p-2 rounded-lg hover:bg-gray-100 cursor-pointer'
         >
           <PencilIcon className='w-5' />

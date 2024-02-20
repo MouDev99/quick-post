@@ -104,18 +104,18 @@ export async function fetchPostCommentsById(postId: string) {
 }
 
 export async function fetchUsersToFollow(userId: string | undefined) {
+
   if (!userId) [];
 
   try {
     const query = `
       SELECT
         id, username, "userProfileUrl", "createdAt"
-      FROM users
+      FROM
+        users
       WHERE id NOT IN (
-        SELECT
-          users.id
-        FROM
-          followers
+        SELECT users.id
+        FROM followers
         JOIN
           users ON followers.user_id = users.id
         WHERE
@@ -130,6 +130,7 @@ export async function fetchUsersToFollow(userId: string | undefined) {
 }
 
 export async function fetchFollowedUsersPosts(userId: string | undefined) {
+
   if (!userId) return [];
 
   try {
@@ -156,7 +157,7 @@ export async function fetchFollowedUsersPosts(userId: string | undefined) {
         FROM bookmarks
       ) AS bookmarks ON posts.id = bookmarks.postId
       WHERE posts."userId" IN (
-        SELECT user_id from followers
+        SELECT user_id FROM followers
         WHERE follower_id = ${userId}
       )
       GROUP BY
@@ -169,5 +170,46 @@ export async function fetchFollowedUsersPosts(userId: string | undefined) {
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error("Failed to fetch followed users' posts.");
+  }
+}
+
+export async function fetchBookmarkedPosts(userId: string | undefined) {
+
+  if (!userId) return [];
+
+  try {
+    const query = `
+      SELECT
+        posts.*,
+        users.email,
+        users.username,
+        users."userProfileUrl",
+        ARRAY_AGG(likes.userId) AS "likedByUsers",
+        ARRAY_AGG(bookmarks.userId) AS "bookmarkedByUsers",
+        COUNT(DISTINCT likes.userId) AS "numOfLikes",
+        COUNT(DISTINCT comments.id) AS "numOfCmnts"
+     FROM
+       posts
+     JOIN
+       users on posts."userId" = users.id
+     LEFT JOIN
+       likes ON posts.id = likes.postId
+     LEFT JOIN
+       comments ON posts.id = comments.postid
+     LEFT JOIN (
+       SELECT DISTINCT postId, userId
+       FROM bookmarks
+     ) AS bookmarks ON posts.id = bookmarks.postId
+
+     WHERE
+       bookmarks.userid = ${userId}
+     GROUP BY
+       posts.id, users.id
+    `;
+    const data = await sql.query(query);
+    return data.rows;
+  } catch(error) {
+    console.error('Database Error:', error);
+    throw new Error("Failed to fetch bookmarked posts.");
   }
 }

@@ -5,26 +5,27 @@ import { useSession } from "next-auth/react";
 import Spinner from "../spinner";
 import PostCard from "../post-card/post-card";
 import { PostType } from "@/app/lib/definitions";
-import { fetchFollowedUsersPosts } from "@/app/lib/data";
+import { fetchBookmarkedPosts } from "@/app/lib/data";
+import Header from "./header";
 
-export default function Following() {
+export default function Bookmarks() {
   const { data: session } = useSession();
   const [posts, setPosts]:
     [PostType[] | undefined, Function] = useState<PostType[] | undefined>();
 
   useEffect(() => {
     const fetchData = async () => {
-      const posts = await fetchFollowedUsersPosts(session?.user?.id);
+      const posts = await fetchBookmarkedPosts(session?.user?.id);
       setPosts(posts);
     }
     fetchData();
   }, [])
 
-  if (!posts) return <Spinner />;
-
   return (
     <div className="h-fit mt-4">
-      {posts.map((post, i) => {
+      <Header />
+      {!posts? <Spinner /> :
+        posts.map((post, i) => {
         return (
           <PostCard
             key={i}
@@ -32,8 +33,8 @@ export default function Following() {
             idx={i}
             post={post}
           />
-        )
-      })}
+        )})
+      }
     </div>
   )
 }

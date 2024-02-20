@@ -32,7 +32,9 @@ export default async function RootLayout({
           <SessionProvider session={session}>
             <div className="flex px-1 sm:px-6 h-fit bg-white justify-center">
               {session?.user && <SideNav />}
-              {children}
+              <div className="ml-1 border-x border-gray-200 max-w-[580px] w-full sm:w-4/5 md:w-3/3">
+                {children}
+              </div>
               {session?.user && <RightSideBar />}
             </div>
           </SessionProvider>

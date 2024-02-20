@@ -29,16 +29,10 @@ export default function FullPostView() {
     fetchData();
   }, [])
 
-  if (!post) {
-    return (
-      <div className="ml-1 pt-4 border-x border-gray-200 max-w-[560px] w-full sm:w-4/5 md:w-3/3">
-        <Spinner />
-      </div>
-    )
-  }
+  if (!post) return <Spinner />;
 
   return (
-    <div className="ml-1 border-x border-gray-200 max-w-[560px] w-full sm:w-4/5 md:w-3/3">
+    <div>
       <div className="flex items-center w-full h-12">
         <div
           className="flex justify-center items-center text-black ml-1 h-10 w-10 rounded-full hover:bg-gray-200 cursor-pointer"
