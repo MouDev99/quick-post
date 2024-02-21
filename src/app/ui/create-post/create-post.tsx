@@ -11,7 +11,7 @@ import {
   MapPinIcon,
   PhotoIcon,
   XMarkIcon
- } from '@heroicons/react/24/outline';
+} from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import UserAvatar from '../user-avatar';
 import { useEdgeStore } from '@/app/lib/edgestroe';
@@ -20,7 +20,7 @@ import { createPostAction } from '@/app/lib/actions';
 import { PostState } from '@/app/lib/definitions';
 import { useSession } from 'next-auth/react';
 
-const CreatePost = memo( function CreatePost() {
+const CreatePost = memo(function CreatePost() {
   const [showPicker, setShowPicker] = useState(false);
   const [showPollModal, setShowPollModal] = useState(false);
   const [imgSrc, setImgSrc] = useState<string | null>('');

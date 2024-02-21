@@ -6,7 +6,7 @@ import { fetchPosts } from "@/app/lib/data";
 import { PostType } from "@/app/lib/definitions";
 import Spinner from "../spinner";
 
-export default  function ForYou() {
+export default function ForYou() {
   const [posts, setPosts]:
     [PostType[] | undefined, Function] = useState<PostType[] | undefined>();
 
