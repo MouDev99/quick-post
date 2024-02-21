@@ -1,11 +1,15 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
 import { useSession } from "next-auth/react";
+import ClearButton from "./clear-bookmarks-button";
 
 
-export default function Header() {
+export default function BookmarksHeader(
+  {showOptionsButton}:
+  {showOptionsButton: boolean}
+) {
   const [showClearButton, setShowClearButton] = useState(false);
   const {data: session} = useSession();
 
@@ -22,27 +26,23 @@ export default function Header() {
         <h1 className="text-xl text-[#0f1419] font-bold leading-tight">Bookmarks</h1>
         <span className="text-sm text-[#536471] leading-none block">@{session?.user?.name}</span>
       </div>
-      <button
-        className="ml-auto h-fit p-[6px] rounded-full hover:bg-gray-200 transition-colors duration-300"
-        onClick={() => setShowClearButton(prev => !prev)}
-      >
-        <div>
-          <EllipsisHorizontalIcon className="w-6"/>
-        </div>
-      </button>
-      {showClearButton && <ClearButton />}
+
+      {showOptionsButton &&
+        <button
+          className="ml-auto h-fit p-[6px] rounded-full hover:bg-gray-200 transition-colors duration-300"
+          onClick={() => setShowClearButton(prev => !prev)}
+        >
+          <div>
+            <EllipsisHorizontalIcon className="w-6" />
+          </div>
+        </button>
+      }
+      {showClearButton &&
+       <ClearButton
+         setShowClearButton={setShowClearButton}
+         userId={session?.user?.id}
+       />
+      }
     </div>
-  )
-}
-
-function ClearButton() {
-
-  return (
-    <button
-      className="absolute top-0 right-0 z-50 flex items-center bg-white h-full p-4 rounded-lg shadow-md border text-[#f4212e] text-md font-bold"
-      onClick={(e) => e.nativeEvent.stopImmediatePropagation()}
-    >
-      Clear all bookmarks
-    </button>
   )
 }

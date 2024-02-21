@@ -12,7 +12,10 @@ export default function Modal(
   return (
     <div onClick={onClose} className="flex fixed top-0 left-0 z-50 backdrop-blur-sm w-full h-full sm:pt-0">
       <div
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e) => {
+          e.nativeEvent.stopImmediatePropagation();
+          e.stopPropagation();
+        }}
         className={'relative px-4 py-6 bg-white rounded-md border-2 border-gray-300 pointer-events-auto ' + styles}
       >
         <IconClose onClose={onClose} />

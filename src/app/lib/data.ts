@@ -83,17 +83,19 @@ export async function fetchPostCommentsById(postId: string) {
 
   try {
     const query = `
-    SELECT
-      comments.content,
-      comments."createdAt",
-      users.username,
-      users."userProfileUrl"
-    FROM
-      comments
-    JOIN
-      users ON comments.userid = users.id
-    WHERE
-      postid = '${postId}';
+      SELECT
+        comments.content,
+        comments."createdAt",
+        users.username,
+        users."userProfileUrl"
+      FROM
+        comments
+      JOIN
+        users ON comments.userid = users.id
+      WHERE
+        postid = '${postId}'
+      ORDER BY
+        comments."createdAt" DESC;
     `;
     const data = await sql.query(query);
     return data.rows

@@ -2,12 +2,11 @@
 
 import { signIn } from '../../auth';
 import { AuthError } from 'next-auth';
-import { tuple, z } from "zod";
+import { z } from "zod";
 import { sql } from '@vercel/postgres';
 import bcrypt from 'bcryptjs';
 import { redirect } from 'next/navigation';
 import {CommentState, PostState, SignUpState } from './definitions';
-import { runInNewContext } from 'vm';
 // ...
 
 const FormSchema = z.object({
@@ -119,6 +118,7 @@ export async function createPostAction(
   }
 
   const {userId, content, imgUrl} = validatedFields.data;
+
   try {
     await sql`
     INSERT INTO posts ("userId", content, "imgUrl")
@@ -141,15 +141,6 @@ export async function likeOrDislikePost(
   userId: number | undefined,
   postId: string
 ) {
-
-  // const followQuery = `
-  //   INSERT INTO followers (user_id, follower_id)
-  //   VALUES (${userId}, ${followerId})
-  // `;
-  // const unfollowQuery = `
-  //   DELETE FROM followers
-  //   WHERE user_id = ${userId} AND follower_id = ${followerId}
-  // `;
 
   const likeQuery = `
     INSERT INTO likes (userId, postId)
@@ -268,6 +259,19 @@ export async function followOrUnfollowUser(
 
   try {
     await sql.query(query);
+    return {success: true}
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function ClearAllBookmarksAction(userId: number) {
+
+  try {
+    await sql`
+      DELETE FROM bookmarks
+      WHERE userid = ${userId}
+    `;
     return {success: true}
   } catch (error) {
     console.error(error);
