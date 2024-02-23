@@ -21,7 +21,7 @@ const navItems = [
   {title: 'Profile', link: '/profile', Icon: UserIcon},
 ];
 
-export default async function SideNav() {
+export default function SideNav() {
 
   return (
     <div className='sticky top-0 h-screen flex flex-col border-x border-gray-200 xl:w-72'>

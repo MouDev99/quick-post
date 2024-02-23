@@ -19,7 +19,13 @@ export default function WhoToFollow() {
     fetchData();
   }, [])
 
-  if (!users) return <Spinner />;
+  if (!users) {
+    return (
+      <Spinner
+        styles="w-8 h-8 border-2 border-t-2 mt-8"
+      />
+    )
+  }
 
   return (
     <div className="mt-2 pb-2 border rounded-2xl w-[355px] h-fit bg-[#f7f9f9]">

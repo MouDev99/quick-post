@@ -1,10 +1,10 @@
 'use server';
 
 import { sql } from '@vercel/postgres';
-import { PostType } from './definitions';
+import { unstable_noStore as noStore, revalidatePath } from 'next/cache';
 
 export async function fetchPosts() {
-
+  noStore();
   try {
     const query = `
       SELECT
@@ -33,7 +33,7 @@ export async function fetchPosts() {
       ORDER BY
         posts."createdAt" DESC;
     `;
-    const data = await sql.query<PostType[]>(query);
+    const data = await sql.query(query);
     return data.rows;
   } catch (error) {
     console.error('Database Error:', error);
@@ -71,7 +71,7 @@ export const fetchPostById = async (id: string) => {
       GROUP BY
         posts.id, users.id
     `;
-    const data = await sql.query<PostType[]>(query);
+    const data = await sql.query(query);
     return data.rows[0];
   } catch (error) {
     console.error('Database Error:', error);
@@ -132,6 +132,7 @@ export async function fetchUsersToFollow(userId: string | undefined) {
 }
 
 export async function fetchFollowedUsersPosts(userId: string | undefined) {
+  noStore();
 
   if (!userId) return [];
 
@@ -176,6 +177,7 @@ export async function fetchFollowedUsersPosts(userId: string | undefined) {
 }
 
 export async function fetchBookmarkedPosts(userId: string | undefined) {
+  noStore();
 
   if (!userId) return [];
 
@@ -214,4 +216,5 @@ export async function fetchBookmarkedPosts(userId: string | undefined) {
     console.error('Database Error:', error);
     throw new Error("Failed to fetch bookmarked posts.");
   }
+
 }

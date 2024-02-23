@@ -1,33 +1,17 @@
 'use client';
 
-import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
-import Spinner from "../spinner";
-import PostCard from "../post-card/post-card";
+import PostCard from "../post-card";
 import { PostType } from "@/app/lib/definitions";
-import { fetchBookmarkedPosts } from "@/app/lib/data";
 import BookmarksHeader from "./bookmarks-header";
 
-export default function Bookmarks() {
-  const { data: session } = useSession();
-  const [posts, setPosts]:
-    [PostType[] | undefined, Function] = useState<PostType[] | undefined>();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const posts = await fetchBookmarkedPosts(session?.user?.id);
-      setPosts(posts);
-    }
-    fetchData();
-  }, [])
+export default function Bookmarks({ posts }: { posts: PostType[] }) {
 
   return (
     <div className="h-fit mt-4">
       <BookmarksHeader
         showOptionsButton={posts?.length ? true : false}
       />
-      {!posts? <Spinner /> :
-        posts.map((post, i) => {
+      {posts.map((post, i) => {
         return (
           <PostCard
             key={i}

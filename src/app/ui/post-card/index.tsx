@@ -20,16 +20,8 @@ import {
 } from "@/app/lib/actions";
 
 export default function PostCard(
-  {
-    post,
-    fullView,
-    idx
-  }:
-  {
-    post: PostType,
-    fullView: boolean,
-    idx: number
-  }
+  {post, fullView, idx}:
+  {post: PostType, fullView: boolean, idx: number}
 ) {
   const {
     id,

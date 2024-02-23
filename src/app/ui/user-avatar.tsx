@@ -6,11 +6,7 @@ import { useSession } from "next-auth/react";
 
 export default function UserAvatar(
   {userProfileUrl, styles, userId }:
-  {
-    userProfileUrl: string | null,
-    styles: string,
-    userId: number | string
-  }
+  {userProfileUrl: string | null, styles: string, userId: number | string}
 ) {
   const { data: session } = useSession();
 
@@ -27,7 +23,7 @@ export default function UserAvatar(
         width={45}
         height={45}
         src={imgSrc}
-        className={'rounded-full min-w-8 object-cover aspect-square' + styles}
+        className={'rounded-full min-w-8 object-cover aspect-square ' + styles}
         alt='profile-pic'
       />
     </div>

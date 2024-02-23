@@ -19,6 +19,7 @@ import { useFormState } from 'react-dom';
 import { createPostAction } from '@/app/lib/actions';
 import { PostState } from '@/app/lib/definitions';
 import { useSession } from 'next-auth/react';
+import Spinner from '../spinner';
 
 const CreatePost = memo(function CreatePost() {
   const [showPicker, setShowPicker] = useState(false);
@@ -29,6 +30,7 @@ const CreatePost = memo(function CreatePost() {
   const initialState: PostState = {errors: {}};
   const [state, dispatch] = useFormState(createPostAction, initialState);
   const [formData, setFormData] = useState(new FormData());
+  const [pending, setPending] = useState(false);
   const [file, setFile] = useState<File>();
 
   const { edgestore } = useEdgeStore();
@@ -69,10 +71,15 @@ const CreatePost = memo(function CreatePost() {
     if (ppUrl) formData.set('imgUrl', ppUrl);
     formData.set('userId', '' + session?.user?.id)
     dispatch(formData);
+    setPending(true);
   };
 
   useEffect(() => {
-    if (state.success) window.location.reload();
+    if (state.success) {
+      setImgSrc(null);
+      setContent('');
+    }
+    setPending(false);
   }, [state])
 
   return (
@@ -80,12 +87,12 @@ const CreatePost = memo(function CreatePost() {
       <div className='flex justify-center pb-2 w-full mx-auto border-b border-gray-300 '>
         <Link href='/profile' className='h-fit w-fit'>
           <UserAvatar
-            styles={'w-fit h-fit w-14'}
+            styles={'w-14 h-fit'}
             userProfileUrl={null}
             userId={session?.user?.id?? ''}
           />
         </Link>
-        <form onSubmit={handleFormSubmit} className='w-full max-w-[340px] ml-2'>
+        <form onSubmit={handleFormSubmit} className='w-full max-w-[340px] ml-1'>
           <textarea
             className='w-full max-h-44 h-24 text-md text-gray-700 outline-none rounded-lg p-3 border-b focus:h-28 focus:shadow-md transition-all duration-500'
             id='content'
@@ -157,10 +164,14 @@ const CreatePost = memo(function CreatePost() {
             </div>
             <button
               type='submit'
-              className={`${(content.trim().length === 0) && !imgSrc ? 'opacity-60' : 'hover:bg-blue-500'} ml-auto h-5/6 px-5 self-center rounded-2xl text-white font-bold bg-[#3A98EB]`}
-              disabled={(content.trim().length === 0) && !imgSrc}
+              className={`${(content.trim().length === 0) && !imgSrc ? 'opacity-60' : 'hover:bg-blue-500'} ml-auto w-20 h-5/6 px-5 self-center rounded-2xl text-white font-bold bg-[#3A98EB]`}
+              disabled={((content.trim().length === 0) && !imgSrc) || pending}
             >
-              Post
+              {pending ?
+               <Spinner
+                 styles='w-5 h-5 border-2 border-t-2'
+               /> :
+               'Post'}
             </button>
           </div>
         </form>

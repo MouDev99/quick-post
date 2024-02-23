@@ -7,6 +7,7 @@ import { sql } from '@vercel/postgres';
 import bcrypt from 'bcryptjs';
 import { redirect } from 'next/navigation';
 import {CommentState, PostState, SignUpState } from './definitions';
+import { revalidatePath } from 'next/cache';
 // ...
 
 const FormSchema = z.object({
@@ -133,6 +134,8 @@ export async function createPostAction(
     };
   }
 
+  revalidatePath('/home');
+
   return {success: true};
 }
 
@@ -191,6 +194,7 @@ export async function addOrRemoveFromBookmarks(
   } catch(error) {
     console.error(error)
   }
+
 }
 
 const CommentSchema = z.object({
@@ -211,7 +215,7 @@ export async function CreateCommentAction(
   }
 
   const validatedFields = CommentSchema.safeParse({
-    content: formData.get("content"),
+    content: formData.get("content")?.toString().trim(),
   })
 
   if (!validatedFields.success) {
@@ -231,9 +235,12 @@ export async function CreateCommentAction(
   } catch (error) {
     console.error(error)
     return {
-      message: 'Database Error: Failed to comment.'
+      message: 'Error: Failed to comment.'
     };
   }
+
+  revalidatePath('/posts/[postId]');
+
   return {success: true}
 }
 
@@ -266,14 +273,17 @@ export async function followOrUnfollowUser(
 }
 
 export async function ClearAllBookmarksAction(userId: number) {
-
   try {
     await sql`
       DELETE FROM bookmarks
       WHERE userid = ${userId}
     `;
-    return {success: true}
+
   } catch (error) {
     console.error(error);
+    return
   }
+
+  revalidatePath("/bookmarks")
+  return {success: true}
 }

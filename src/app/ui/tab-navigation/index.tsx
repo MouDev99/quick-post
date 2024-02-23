@@ -3,10 +3,7 @@ import { Cog8ToothIcon } from '@heroicons/react/24/outline';
 
 export default function TabNavigation(
   { activeTab, setActiveTab}:
-  {
-    activeTab: string,
-    setActiveTab: Function
-  }
+  {activeTab: string, setActiveTab: Function}
 ) {
   const activeClass = 'font-extrabold text-gray-800 border-b-4 border-[#3A98EB]';
 

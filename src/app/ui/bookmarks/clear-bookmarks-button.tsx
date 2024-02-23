@@ -5,25 +5,22 @@ import { ClearAllBookmarksAction } from "@/app/lib/actions";
 
 export default
 function ClearButton(
-  {setShowClearButton,
-   userId
-  }:
-  {setShowClearButton: Function,
-   userId: string | undefined
-  }
+  {setShowClearButton, userId}:
+  {setShowClearButton: Function, userId: string | undefined}
 ) {
   const [showAlert, setShowAlert] = useState(false);
   const [showError, setShowError] = useState(false);
 
   const clearAllBookmarks = async (e: React.MouseEvent<HTMLButtonElement>) => {
-
     if (!userId) return;
 
     const userIdInt = parseInt(userId);
     const res = await ClearAllBookmarksAction(userIdInt);
-
-    if (res?.success) window.location.reload();
-    else {
+    if (res?.success) {
+      setShowAlert(false);
+      setShowClearButton(false);
+    } else {
+      // show error for 3 secs
       setShowError(true);
       await new Promise((resolve) => setTimeout(resolve, 2000));
       setShowAlert(false);

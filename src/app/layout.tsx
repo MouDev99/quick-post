@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { Roboto_Mono } from "next/font/google";
 import "./globals.css";
-import SideNav from "./ui/sidenav/sidenav";
+import SideNav from "./ui/sidenav";
 import { auth } from "@/auth";
 import { EdgeStoreProvider } from "./lib/edgestroe";
 import SessionProvider from './session-provider';
-import RightSideBar from "./ui/right-sidebar/right-sidebar";
+import RightSideBar from "./ui/right-sidebar";
 
 const robot_mono = Roboto_Mono({
   subsets: ['latin'],

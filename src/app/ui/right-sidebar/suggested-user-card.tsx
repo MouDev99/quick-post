@@ -8,12 +8,12 @@ import { UserType } from "@/app/lib/definitions";
 import { followOrUnfollowUser } from "@/app/lib/actions";
 
 export default function SuggestedUserCard(
-  { user, sessionUserId }:
+  {user, sessionUserId}:
   {user: UserType, sessionUserId: string | undefined}
 ) {
   const [following, setFollowing] = useState(false);
 
-  const handleFollowOrUnfollowClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleFollowOrUnfollowClick = async () => {
 
     if (!sessionUserId) return;
 

@@ -1,5 +1,15 @@
-import Bookmarks from '../ui/bookmarks/bookmarks';
+import { auth } from '@/auth';
+import { fetchBookmarkedPosts } from '../lib/data';
+import Bookmarks from '../ui/bookmarks';
 
-export default function Page() {
-  return <Bookmarks />
+export default async function Page() {
+  const session = await auth();
+  const user = session?.user;
+  const posts = await fetchBookmarkedPosts(user?.id);
+
+  return (
+    <Bookmarks
+      posts={posts}
+    />
+  )
 };
