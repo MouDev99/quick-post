@@ -7,6 +7,13 @@ export type UserType = {
   createdAt: Date
 };
 
+export type SessionUserType = {
+  id?: string | undefined;
+  name?: string | null | undefined,
+  email?: string | null | undefined,
+  image?: string | null | undefined
+}
+
 export type SignUpState = {
   errors?: {
     username?: string[];
@@ -55,4 +62,14 @@ export type CommentState = {
   },
   message?: string
   success?: boolean
+}
+
+export type UserProfileDetailsType = {
+  id: number,
+  username: string,
+  profileUrl: string,
+  joinedAt: Date,
+  numOfPosts: string,
+  numOfFollowers: string,
+  numOfFollowing: string,
 }

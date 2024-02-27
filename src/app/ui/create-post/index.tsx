@@ -85,9 +85,10 @@ const CreatePost = memo(function CreatePost() {
   return (
     <div className='px-1'>
       <div className='flex justify-center pb-2 w-full mx-auto border-b border-gray-300 '>
-        <Link href='/profile' className='h-fit w-fit'>
+        <Link href={`/${session?.user?.name}`} className='h-fit w-fit'>
           <UserAvatar
             styles={'w-14 h-fit'}
+            noProfilePicStyles='w-10'
             userProfileUrl={null}
             userId={session?.user?.id?? ''}
           />

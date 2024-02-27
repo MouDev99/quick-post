@@ -71,9 +71,10 @@ export default function PostCard(
   return (
     <div className={`h-fit min-h-48 flex pt-2 pr-1 mt-2 border-b border-gray-300 ${idx === 0 ? 'border-t border-gray-300' : ''}`}>
       <div className="w-fit px-2 h-full">
-        <Link href='/profile' className='h-full w-fit'>
+        <Link href={`/${username}`} className='h-full w-fit'>
           <UserAvatar
-            styles=""
+            styles="w-12"
+            noProfilePicStyles="w-8"
             userProfileUrl={userProfileUrl}
             userId={userId}
           />
@@ -82,7 +83,7 @@ export default function PostCard(
       <div className="relative flex flex-col w-full">
         <div className="flex justify-between">
           <span className="text-lg text-[#0f1419] font-semibold">
-            <Link href='/profile'>@{username}</Link>
+            <Link href={`/${username}`}>@{username}</Link>
             <time className="ml-1 text-sm text-[#536471]">
               {new Date(createdAt).toDateString()}
             </time>

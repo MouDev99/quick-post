@@ -18,7 +18,8 @@ export default function UserInfo() {
       >
         <div className='flex items-center gap-1 w-full'>
           <UserAvatar
-            styles={''}
+            styles="w-12"
+            noProfilePicStyles="w-8"
             userProfileUrl={null}
             userId={user?.id?? ''}
           />

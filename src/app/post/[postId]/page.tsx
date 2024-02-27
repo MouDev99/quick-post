@@ -4,7 +4,7 @@ import { auth } from "@/auth";
 
 export default async function Page({params}: {params: {postId: string}}) {
   const session = await auth();
-  const user = session?.user;
+  const sessionUser = session?.user;
   const postId = params.postId;
   const [post, postComments] =
     await Promise.all([fetchPostById(postId), fetchPostCommentsById(postId)]);
@@ -13,7 +13,7 @@ export default async function Page({params}: {params: {postId: string}}) {
     <FullPostView
       post={post}
       postComments={postComments}
-      sessionUserId={user?.id?? ''}
+      sessionUser={sessionUser}
     />
   )
 }

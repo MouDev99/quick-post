@@ -13,7 +13,8 @@ export default function SuggestedUserCard(
 ) {
   const [following, setFollowing] = useState(false);
 
-  const handleFollowOrUnfollowClick = async () => {
+  const handleFollowOrUnfollowClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
 
     if (!sessionUserId) return;
 
@@ -33,14 +34,15 @@ export default function SuggestedUserCard(
   return (
     <Link
       className="block p-2 w-full h-fit hover:bg-blue-100 transition-all duration-300"
-      href={'#'}
+      href={`/${user.username}`}
     >
       <div className="flex items-center w-full">
         <div className="flex">
           <UserAvatar
-            userId={user.id}
             userProfileUrl={user.userProfileUrl}
-            styles=""
+            noProfilePicStyles="w-8"
+            styles="w-12"
+            userId={user.id}
           />
           <div className="ml-1">
             <h2 className="text-lg font-semibold">{user.username}</h2>

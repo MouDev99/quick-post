@@ -5,8 +5,8 @@ import { UserIcon as UserIconSolid } from '@heroicons/react/24/solid';
 import { useSession } from "next-auth/react";
 
 export default function UserAvatar(
-  {userProfileUrl, styles, userId }:
-  {userProfileUrl: string | null, styles: string, userId: number | string}
+  {userProfileUrl, styles, noProfilePicStyles, userId }:
+  {userProfileUrl: string | null, styles: string, noProfilePicStyles?: string | undefined, userId: number | string}
 ) {
   const { data: session } = useSession();
 
@@ -15,26 +15,30 @@ export default function UserAvatar(
     imgSrc = session?.user?.image
   } else imgSrc = userProfileUrl;
 
-  if (!imgSrc) return <NoProfilePicAvatar />
+  if (!imgSrc) return (
+    <NoProfilePicAvatar
+      styles={noProfilePicStyles}
+    />
+  )
 
   return (
-    <div className='border-2 border-gray-600 rounded-full overflow-hidden w-fit'>
+    <div className={'rounded-full overflow-hidden ' + styles}>
       <Image
         width={45}
         height={45}
         src={imgSrc}
-        className={'rounded-full min-w-8 object-cover aspect-square ' + styles}
+        className={'border border-gray-500 rounded-full w-full h-full object-cover aspect-square '}
         alt='profile-pic'
       />
     </div>
   )
 }
 
-function NoProfilePicAvatar() {
+function NoProfilePicAvatar({styles}: {styles: string | undefined}) {
 
   return (
-    <div className='w-fit h-full p-2 rounded-full bg-[#CDD6DC]'>
-      <UserIconSolid className='w-8 text-[#677685]' />
+    <div className={'w-fit h-full p-2 rounded-full bg-[#CDD6DC] ' }>
+      <UserIconSolid className={'text-[#677685] ' + styles} />
     </div>
   )
 }

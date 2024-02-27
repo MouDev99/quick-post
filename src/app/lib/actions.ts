@@ -162,10 +162,13 @@ export async function likeOrDislikePost(
 
   try {
     await sql.query(query);
-    return {success: true}
   } catch(error) {
     console.error(error)
   }
+
+  revalidatePath("/[username]", "page");
+
+  return {success: true}
 }
 
 export async function addOrRemoveFromBookmarks(
@@ -266,10 +269,13 @@ export async function followOrUnfollowUser(
 
   try {
     await sql.query(query);
-    return {success: true}
   } catch (error) {
     console.error(error);
   }
+
+  revalidatePath("/[username]", "page");
+
+  return {success: true}
 }
 
 export async function ClearAllBookmarksAction(userId: number) {
