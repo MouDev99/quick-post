@@ -4,7 +4,7 @@ export type UserType = {
   email: string;
   hashedpassword: string;
   userProfileUrl: string | null
-  createdAt: Date
+  joinedAt: Date
 };
 
 export type SessionUserType = {

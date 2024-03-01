@@ -1,9 +1,9 @@
 'use client';
 
 import React from "react";
+import { useState } from "react";
 import Link from "next/link";
 import UserAvatar from "../user-avatar";
-import { useState } from "react";
 import { UserType } from "@/app/lib/definitions";
 import { followOrUnfollowUser } from "@/app/lib/actions";
 
@@ -46,7 +46,7 @@ export default function SuggestedUserCard(
           />
           <div className="ml-1">
             <h2 className="text-lg font-semibold">{user.username}</h2>
-            <p className="text-xs leading-3">{user.createdAt.toDateString()}</p>
+            <p className="text-xs leading-3">{user.joinedAt.toDateString()}</p>
           </div>
         </div>
         <button

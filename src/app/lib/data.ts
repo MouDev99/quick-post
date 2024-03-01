@@ -112,7 +112,7 @@ export async function fetchUsersToFollow(userId: string | undefined) {
   try {
     const query = `
       SELECT
-        id, username, "userProfileUrl", "createdAt"
+        id, username, "userProfileUrl", "joinedAt"
       FROM
         users
       WHERE id NOT IN (
@@ -384,6 +384,61 @@ export async function fetchLikedPostsByUsername(username: string) {
           users.id, posts.id
       ORDER BY
           posts."createdAt" DESC;
+    `;
+    const data = await sql.query(query);
+    return data.rows;
+  } catch (error) {
+    console.error('Database Error:', error)
+  }
+  return []
+}
+
+export async function fetchFilteredUsers(searchQuery: string | undefined) {
+  if (!searchQuery) return []
+
+  try {
+    const query = `
+      SELECT * FROM users
+      WHERE
+        username ILIKE '%${searchQuery}%';
+    `;
+    const data = await sql.query(query);
+    return data.rows;
+  } catch (error) {
+    console.error('Database Error:', error)
+  }
+  return []
+}
+
+export async function fetchFilteredPosts(searchQuery: string | undefined) {
+  if (!searchQuery) return []
+
+  try {
+    const query = `
+      SELECT
+        posts.*,
+        users.email,
+        users.username,
+        users."userProfileUrl",
+        ARRAY_AGG(DISTINCT likes.userId) AS "likedByUsers",
+        ARRAY_AGG(DISTINCT bookmarks.userId) AS "bookmarkedByUsers",
+        COUNT(DISTINCT likes.userId) AS "numOfLikes",
+        COUNT(DISTINCT comments.id) AS "numOfCmnts"
+      FROM posts
+      JOIN
+        users on posts."userId" = users.id
+      LEFT JOIN
+        likes ON posts.id = likes.postId
+      LEFT JOIN
+        comments ON posts.id = comments.postid
+      LEFT JOIN (
+        SELECT DISTINCT postId, userId
+        FROM bookmarks
+      ) AS bookmarks ON posts.id = bookmarks.postId
+      WHERE
+        posts.content ILIKE '%${searchQuery}%'
+      GROUP BY
+        posts.id, users.id;
     `;
     const data = await sql.query(query);
     return data.rows;
