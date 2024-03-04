@@ -20,6 +20,8 @@ export default function UserDetails(
     numOfFollowers,
     numOfFollowing,
   } = userDetails;
+  const isSessionUserPage =
+    sessionUserId && Number(sessionUserId) === userId;
 
   return (
     <>
@@ -32,9 +34,13 @@ export default function UserDetails(
             userId={userId}
           />
         </div>
-        {sessionUserId && Number(sessionUserId) === userId ?
+        {isSessionUserPage ?
           <SetUpProfileButton /> :
-          <ProfileActionBar />
+          <ProfileActionBar
+            isFollowed={userDetails.isFollowed}
+            sessionUserId={sessionUserId}
+            userId={userId}
+          />
         }
       </div>
       <div className="flex flex-col w-full h-fit px-4 py-3 ">

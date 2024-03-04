@@ -219,7 +219,12 @@ export async function fetchBookmarkedPosts(userId: string | undefined) {
 
 }
 
-export async function fetchUserProfileDetails(username: string) {
+export async function fetchUserProfileDetails(
+  username: string,
+  sessionUserId: string | undefined
+) {
+
+  if (!sessionUserId) return;
 
   try {
     const numOfPostsPromise = sql`
@@ -248,17 +253,31 @@ export async function fetchUserProfileDetails(username: string) {
       WHERE username = ${username};
     `;
 
+    // isFollowed for if the user (with this username)
+    // is followed by the session user
+    const isFollowedPromise = sql`
+      SELECT followers.*
+      FROM followers
+      JOIN users on followers.user_id = users.id
+      WHERE users.username = ${username}
+        AND users.id = followers.user_id
+        AND followers.follower_id = ${sessionUserId};
+    `;
+
     const data = await Promise.all([
       numOfPostsPromise,
       numOfFollowersPromise,
       numOfFollowingPromise,
-      userInfoPromise
+      userInfoPromise,
+      isFollowedPromise
     ]);
 
     const numOfPosts = data[0].rows[0].count;
     const numOfFollowers = data[1].rows[0].numOfFollowers;
     const numOfFollowing = data[2].rows[0].numOfFollowing;
     const userInfo = data[3].rows[0];
+    const isFollowed = data[4].rows[0] ? true : false;
+
     return {
       numOfPosts,
       numOfFollowers,
@@ -266,7 +285,8 @@ export async function fetchUserProfileDetails(username: string) {
       id: userInfo.id,
       username: userInfo.username,
       profileUrl: userInfo.userProfileUrl,
-      joinedAt: userInfo.joinedAt
+      joinedAt: userInfo.joinedAt,
+      isFollowed
     }
   } catch (error) {
     console.error('Database Error:', error);

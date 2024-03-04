@@ -72,4 +72,5 @@ export type UserProfileDetailsType = {
   numOfPosts: string,
   numOfFollowers: string,
   numOfFollowing: string,
+  isFollowed: boolean
 }
