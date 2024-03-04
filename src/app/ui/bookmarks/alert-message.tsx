@@ -8,7 +8,7 @@ export default function AlertMessage(
 ) {
 
   return (
-    <div className="">
+    <div className="p-3 pb-2">
       <span className="text-xl text-[#0f1419] font-bold">Clear all bookmarks?</span>
       <span className="text-sm text-[#536471] block mt-1 leading-tight">
         This can’t be undone and you’ll remove all posts you’ve added to your Bookmarks.

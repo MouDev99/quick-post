@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Modal from "../modal";
-import AlertMessage from "../alert-message";
+import {Modal} from "../modal";
+import AlertMessage from "./alert-message";
 import { ClearAllBookmarksAction } from "@/app/lib/actions";
 
 export default
@@ -22,7 +22,7 @@ function ClearButton(
     } else {
       // show error for 3 secs
       setShowError(true);
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 3000));
       setShowAlert(false);
       setShowClearButton(false);
     }
@@ -46,7 +46,7 @@ function ClearButton(
       </button>
       {showAlert &&
         <Modal
-          styles="w-80 h-fit sm:h-60 p-8 m-auto rounded-xl border-2 border-gray-200"
+          styles="absolute top-0 left-0 right-0 bottom-0 max-w-80 h-fit sm:h-60 m-auto p-1 rounded-xl border-2 border-gray-200 bg-white"
           onClose={cancelAction}
         >
           <AlertMessage
@@ -57,10 +57,10 @@ function ClearButton(
       }
       {showError &&
         <Modal
-          styles="w-fit h-fit m-auto rounded-xl border border-red-600 "
+          styles="absolute top-0 left-0 right-0 bottom-0 bg-white w-fit h-fit m-auto p-1 rounded-xl border-2 border-red-600 "
           onClose={cancelAction}
         >
-          <p className="text-red-600">An error has occurred. Try again later.</p>
+          <p className="text-red-600 ml-1">An error has occurred. Try again later.</p>
         </Modal>
       }
     </div>
