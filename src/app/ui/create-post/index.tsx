@@ -4,7 +4,7 @@ import { ChangeEvent, memo, useEffect, useState } from 'react';
 import Link from 'next/link';
 import EmojiPicker from './emoji-picker';
 import PollCreator from './poll-creator';
-import Modal from '../modal';
+import {Modal} from '../modal';
 import {
   ChartBarSquareIcon,
   FaceSmileIcon,
@@ -43,7 +43,7 @@ const CreatePost = memo(function CreatePost() {
     const file = files[0];
     if (file) {
       const tempUrl = URL.createObjectURL(file);
-      setImgSrc(tempUrl);
+      if (setImgSrc) setImgSrc(tempUrl);
       setFile(file);
     }
   }
@@ -76,7 +76,7 @@ const CreatePost = memo(function CreatePost() {
 
   useEffect(() => {
     if (state.success) {
-      setImgSrc(null);
+      if (setImgSrc) setImgSrc(null);
       setContent('');
     }
     setPending(false);
@@ -108,7 +108,7 @@ const CreatePost = memo(function CreatePost() {
           >
           </textarea>
           {state?.errors?.content &&
-            <div className='h-fit bg-red-200 text-red-600 py-1 px-2 rounded-lg border border-red-600'>
+            <div className='h-fit bg-red-200 text-red-600 py-1 px-2 my-1 rounded-lg border border-red-600'>
               {state?.errors?.content?.map((error: string, idx: number) => {
                 return <div key={idx}>{error}</div>
               })
@@ -156,7 +156,7 @@ const CreatePost = memo(function CreatePost() {
               }
               {showPollModal &&
                 <Modal
-                  styles='w-96 h-fit m-auto mt-56 md:left-2/4	md:top-48 md:m-0 z-50 bg-white'
+                  styles='absolute top-0 left-1/2 right-0 bottom-0 mt-72 p-2 w-fit h-fit bg-white rounded-lg max-h-full overflow-auto'
                   onClose={() => setShowPollModal(false)}
                 >
                   <PollCreator />
@@ -181,7 +181,7 @@ const CreatePost = memo(function CreatePost() {
       {imgSrc &&
         <div className='w-full border-b border-gray-300'>
           <div
-            className='w-fit p-1 ml-auto cursor-pointer rounded-full	hover:bg-gray-200 transition-all duration-100'
+            className='w-fit p-1 ml-auto mr-1 my-1 cursor-pointer rounded-full	hover:bg-gray-200 transition-all duration-100'
             onClick={() => setImgSrc(null)}
           >
             <XMarkIcon className='w-6 text-black'/>

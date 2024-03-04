@@ -63,7 +63,7 @@ export default function SignupFrom() {
   };
 
   return (
-    <form onSubmit={handleFormSubmit} className='grid grid-rows-6 grid-cols-2 gap-2 max-w-fit mx-auto max-[425px]:flex max-[425px]:flex-col'>
+    <form onSubmit={handleFormSubmit} className='grid grid-rows-6 grid-cols-2 gap-2 ml-6 mt-7 max-w-fit mx-auto max-[580px]:flex max-[580px]:flex-col'>
       <div className="flex flex-col justify-center text-center text-black col-span-2 row-span-1 border border-gray-200 rounded-lg shadow-md">
         <h1 className="text-3xl font-bold">Sign Up</h1>
         <p className="text-lg text-gray-500">Create your account and start exploring.</p>

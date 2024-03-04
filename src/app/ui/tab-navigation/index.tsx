@@ -8,7 +8,7 @@ export default function TabNavigation(
   const activeClass = 'font-extrabold text-gray-800 border-b-4 border-[#3A98EB]';
 
   return (
-    <div className="sticky top-0 z-50 h-fit mb-2 bg-white border-b border-gray-300">
+    <div className="sticky top-0 z-40 h-fit mb-2 bg-white border-b border-gray-300">
       <div className="grid grid-rows-2 grid-cols-2 gap-1 sm:grid-rows-1 sm:grid-cols-3 border-b-[1px] border-gray-300 shadow-sm">
         <Link
           href='/home'

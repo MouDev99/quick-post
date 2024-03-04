@@ -6,6 +6,7 @@ import { auth } from "@/auth";
 import { EdgeStoreProvider } from "./lib/edgestroe";
 import SessionProvider from './session-provider';
 import RightSideBar from "./ui/right-sidebar";
+import ModalProvider from "./ui/modal";
 
 const robot_mono = Roboto_Mono({
   subsets: ['latin'],
@@ -31,13 +32,15 @@ export default async function RootLayout({
       <body className={robot_mono.className}>
         <EdgeStoreProvider>
           <SessionProvider session={session}>
-            <div className="flex justify-center px-1 sm:px-6 h-fit bg-white">
-              {isLoggedIn && <SideNav />}
-              <div className={isLoggedIn ? 'ml-1 border-x border-gray-200 max-w-[580px] w-full sm:w-4/5 md:w-3/3' : ''}>
-                {children}
+            <ModalProvider>
+              <div className="flex justify-center px-1 sm:px-6 h-fit bg-white">
+                {isLoggedIn && <SideNav />}
+                <div className={isLoggedIn ? 'ml-1 border-x border-gray-200 max-w-[580px] w-full sm:w-4/5 md:w-3/3' : ''}>
+                  {children}
+                </div>
+                {isLoggedIn && <RightSideBar />}
               </div>
-              {isLoggedIn && <RightSideBar />}
-            </div>
+            </ModalProvider>
           </SessionProvider>
         </EdgeStoreProvider>
       </body>

@@ -1,7 +1,6 @@
 import { fetchFilteredPosts, fetchFilteredUsers } from "../lib/data";
 import SearchResults from "../ui/search-results";
 
-
 export default async function Page(
   {searchParams}:
   {searchParams: {query?: string}}
@@ -11,6 +10,7 @@ export default async function Page(
      [fetchFilteredUsers(query),
       fetchFilteredPosts(query)]
   )
+
   return (
     <SearchResults
       users={users}

@@ -3,10 +3,10 @@
 import LoginForm from '@/app/ui/login-form';
 import Image from 'next/image';
 import { useState } from 'react';
-import Modal from '@/app/ui/modal';
+import { Modal } from '@/app/ui/modal';
 import SignupFrom from '@/app/ui/signup-form';
 
-export default function Index() {
+export default function Page() {
   const [showSignup, setShowSignup] = useState(false);
 
   return (
@@ -24,7 +24,11 @@ export default function Index() {
             <span className="mx-2 text-gray-600 font-semibold">Or</span>
             <span className="w-full h-1 bg-gray-300 rounded-lg"></span>
           </div>
-          <button onClick={() => setShowSignup(true)} type="submit" className="flex justify-center rounded-xl py-2 w-full font-semibold text-md text-white bg-[#3A98EB] hover:opacity-90 transition-opacity duration-300">
+          <button
+            type="submit"
+            className="flex justify-center rounded-xl py-2 w-full font-semibold text-md text-white bg-[#3A98EB] hover:opacity-90 transition-opacity duration-300"
+            onClick={() => setShowSignup(true)}
+          >
             Create Account
           </button>
         </div>
@@ -32,7 +36,7 @@ export default function Index() {
       <div>
         {showSignup &&
           <Modal
-            styles='w-full h-[100vh] overflow-auto md:w-fit min-[425px]:h-fit min-[425px]:m-auto pt-8 pb-4'
+            styles='absolute top-0 left-0 right-0 bottom-0 m-auto p-1 w-fit h-fit bg-white rounded-lg max-h-full overflow-auto'
             onClose={() => setShowSignup(false)}
           >
             <SignupFrom />
@@ -42,7 +46,6 @@ export default function Index() {
     </main>
   );
 }
-
 
 function Logo() {
 

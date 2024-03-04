@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import TabNavigation from "@/app/ui/tab-navigation";
-import CreatePost from "@/app/ui/create-post";
 import ForYou from "@/app/ui/for-you";
 import Following from "@/app/ui/following";
 import { PostType } from "@/app/lib/definitions";
+import CreatePost from "@/app/ui/create-post";
 
 export default function Home(
   {forYouPosts, followingPosts}:
