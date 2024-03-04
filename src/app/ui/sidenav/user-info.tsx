@@ -23,12 +23,12 @@ export default function UserInfo() {
             userProfileUrl={null}
             userId={user?.id?? ''}
           />
-          <div className='flex-col items-start hidden lg:flex'>
+          <div className='flex-col items-start hidden xl:flex'>
             <h3 className='leading-5 text-base font-extrabold text-[#0f1419]'>@{user?.name}</h3>
             <h4 className='leading-4 text-[#536471]'>{user?.email}</h4>
           </div>
         </div>
-        <EllipsisHorizontalIcon className='text-black w-7 hidden lg:block'/>
+        <EllipsisHorizontalIcon className='text-black w-7 hidden xl:block'/>
       </button>
       {showMore &&
         <div className='absolute -top-20 flex items-center h-[75px] w-full border-[1px] border-gray-200 rounded-lg shadow-lg'>

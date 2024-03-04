@@ -14,10 +14,10 @@ export default function PostButton() {
         className='flex justify-center items-center w-full h-full rounded-full md:rounded-3xl font-bold bg-[#3A98EB] hover:bg-blue-500 transition-colors duration-300'
         onClick={(e) => setShowModal(true)}
       >
-        <div className='hidden lg:block text-lg text-white'>
+        <div className='hidden xl:block text-lg text-white'>
           Post
         </div>
-        <PencilSquareIcon className='w-7 text-white lg:hidden'/>
+        <PencilSquareIcon className='w-7 text-white xl:hidden'/>
       </button>
       {showModal &&
        <Modal
