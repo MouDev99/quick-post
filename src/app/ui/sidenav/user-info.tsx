@@ -38,7 +38,7 @@ export default function UserInfo() {
             onClick={() => signOut()}
           >
            <PowerIcon className="w-6 text-red-800"/>
-          <span className="hidden lg:inline">Logout</span>
+          <span className="hidden xl:inline">Logout</span>
           </button>
         </div>
       }

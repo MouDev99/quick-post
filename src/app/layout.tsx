@@ -7,6 +7,7 @@ import { EdgeStoreProvider } from "./lib/edgestroe";
 import SessionProvider from './session-provider';
 import RightSideBar from "./ui/right-sidebar";
 import ModalProvider from "./ui/modal";
+import { fetchUsersToFollow } from "./lib/data";
 
 const robot_mono = Roboto_Mono({
   subsets: ['latin'],
@@ -25,7 +26,11 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
-  const isLoggedIn = session?.user ? true : false;
+  const user = session?.user
+
+  const usersToFollow = await fetchUsersToFollow(user?.id);
+
+  const isLoggedIn = user ? true : false;
 
   return (
     <html lang="en">
@@ -38,7 +43,11 @@ export default async function RootLayout({
                 <div className={isLoggedIn ? 'ml-1 border-x border-gray-200 max-w-[580px] w-full sm:w-4/5 md:w-3/3' : ''}>
                   {children}
                 </div>
-                {isLoggedIn && <RightSideBar />}
+                {isLoggedIn &&
+                 <RightSideBar
+                   usersToFollow={usersToFollow}
+                 />
+                }
               </div>
             </ModalProvider>
           </SessionProvider>
