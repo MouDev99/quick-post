@@ -107,7 +107,7 @@ export async function fetchPostCommentsById(postId: string) {
 
 export async function fetchUsersToFollow(userId: string | undefined) {
 
-  if (!userId) [];
+  if (!userId) return [];
 
   try {
     const query = `
